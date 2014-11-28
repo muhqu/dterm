@@ -25,10 +25,16 @@ cd ./dterm
 ./build.sh --with-dmg
 ```
 
+
+# License
+
+[The MIT License (MIT)](./LICENSE).
+
 ---
 
-Copyright © 2011-2013 [Decimus Software, Inc][decimus].
+Copyright © 2004-2013 [Decimus Software, Inc][decimus].
 
+"DTerm" and "Decimus" are either trademarks or registered trademarks of [Decimus Software, Inc][decimus].
 
 [releases]: https://github.com/muhqu/dterm/releases
 [decimus]: http://decimus.net
