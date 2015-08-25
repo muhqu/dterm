@@ -28,12 +28,27 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 		self.runs = [NSMutableArray array];
 		
 		NSUserDefaultsController *sdc = [NSUserDefaultsController sharedUserDefaultsController];
-		[sdc addObserver:self forKeyPath:@"values.DTTextColor" options:0 context:DTPreferencesContext];
-		[sdc addObserver:self forKeyPath:@"values.DTFontName" options:0 context:DTPreferencesContext];
-		[sdc addObserver:self forKeyPath:@"values.DTFontSize" options:0 context:DTPreferencesContext];
+        for (NSString *defaultKeyPath in [self observedDefaults])
+        {
+            [sdc addObserver:self forKeyPath:defaultKeyPath options:0 context:DTPreferencesContext];
+        }
 	}
 	
 	return self;
+}
+
+-(void)dealloc
+{
+    NSUserDefaultsController *sdc = [NSUserDefaultsController sharedUserDefaultsController];
+    for (NSString *defaultKeyPath in [self observedDefaults])
+    {
+        [sdc removeObserver:self forKeyPath:defaultKeyPath context:DTPreferencesContext];
+    }
+}
+
+- (NSArray *)observedDefaults
+{
+    return @[ @"values.DTTextColor", @"values.DTFontName", @"values.DTFontSize" ];
 }
 
 - (void)windowDidLoad {

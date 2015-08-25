@@ -134,47 +134,56 @@
 
 - (void)readData:(NSNotification*)notification {
 	id fileHandle = [notification object];
-	if((fileHandle == stdOut) || (fileHandle == stdErr)) {
-		NSData* data = [notification userInfo][NSFileHandleNotificationDataItem];
-		if([data length]) {
-			// Data was returned; append it
-			if(!unprocessedResultsData)
-				unprocessedResultsData = [NSMutableData dataWithCapacity:[data length]];
-			[unprocessedResultsData appendData:data];
-			
-			[self processResultsData];
-			
-			// Reschedule for the next round of reading
-			[fileHandle readInBackgroundAndNotify];
-		} else {
-			// No data, so this handle is done
-			if(fileHandle == stdOut)
-				stdOut = nil;
-			if(fileHandle == stdErr)
-				stdErr = nil;
-			
-			// If both handles have closed, we're done with the task too
-			if(!stdOut && !stdErr) {				
-				self.task = nil;
-				
+    NSData  *data = [notification userInfo][NSFileHandleNotificationDataItem];
+    
+    if ((fileHandle != stdOut) && (fileHandle != stdErr))
+    {
+        return;
+    }
+    
+    if([data length]) {
+        // Data was returned; append it
+        if(!unprocessedResultsData)
+            unprocessedResultsData = [NSMutableData dataWithCapacity:[data length]];
+        [unprocessedResultsData appendData:data];
+        
+        [self processResultsData];
+        
+        // Reschedule for the next round of reading
+        [fileHandle readInBackgroundAndNotify];
+    } else {
+        // No data, so this handle is done
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSFileHandleReadCompletionNotification object:fileHandle];
+        if(fileHandle == stdOut)
+        {
+            stdOut = nil;
+        }
+        else if(fileHandle == stdErr)
+        {
+            stdErr = nil;
+        }
+        
+        // If both handles have closed, we're done with the task too
+        if(!stdOut && !stdErr) {
+            self.task = nil;
+            
                 // TODO: re-add Growl support
-//				DTTermWindowController* termWindowController = [APP_DELEGATE termWindowController];
-//				if(![[termWindowController window] isVisible] || ![[[termWindowController runsController] selectedObjects] containsObject:self]) {
-//					NSArray* lines = [[self.resultsStorage string] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-//					NSString* lastLine = [lines lastObject];
-//					if(![lastLine length])
-//						lastLine = NSLocalizedString(@"<no results>", @"Growl notification description");
-//					[GrowlApplicationBridge notifyWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Command finished: %@", @"Growl notification title"), self.command]
-//												description:lastLine 
-//										   notificationName:@"DTCommandCompleted"
-//												   iconData:nil 
-//												   priority:0 
-//												   isSticky:NO 
-//											   clickContext:nil];
-//				}
-			}
-		}
-	}
+//            DTTermWindowController* termWindowController = [APP_DELEGATE termWindowController];
+//            if(![[termWindowController window] isVisible] || ![[[termWindowController runsController] selectedObjects] containsObject:self]) {
+//                NSArray* lines = [[self.resultsStorage string] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+//                NSString* lastLine = [lines lastObject];
+//                if(![lastLine length])
+//                    lastLine = NSLocalizedString(@"<no results>", @"Growl notification description");
+//                [GrowlApplicationBridge notifyWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Command finished: %@", @"Growl notification title"), self.command]
+//                                            description:lastLine
+//                                       notificationName:@"DTCommandCompleted"
+//                                               iconData:nil 
+//                                               priority:0 
+//                                               isSticky:NO 
+//                                           clickContext:nil];
+//            }
+        }
+    }
 }
 
 #define ASCII_BS	0x08
