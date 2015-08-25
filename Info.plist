@@ -13,15 +13,13 @@
 	<key>CFBundleIconFile</key>
 	<string>DTerm</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.decimus.dterm</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<key>CFBundleVersion</key>
-	<string>REVISION</string>
 	<key>CFBundleShortVersionString</key>
 	<string>REVISION_PUBLIC</string>
 	<key>CFBundleSignature</key>
@@ -39,6 +37,8 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>REVISION</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.5.0</string>
 	<key>LSMinimumSystemVersionByArchitecture</key>
