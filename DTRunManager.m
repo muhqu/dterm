@@ -44,6 +44,12 @@
 		return @[@"-i", @"-c", command];
 }
 
+-(instancetype)init NS_UNAVAILABLE
+{
+    NSAssert(NO, @"must call -initWithWD:selection:command:");
+    @throw nil;
+}
+
 - (instancetype)initWithWD:(NSString*)_wd selection:(NSArray*)_selection command:(NSString*)_command {
 	if((self = [super init])) {
 		resultsStorage = [[NSTextStorage alloc] init];

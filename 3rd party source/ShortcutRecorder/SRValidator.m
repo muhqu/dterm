@@ -31,6 +31,12 @@
     return self;
 }
 
+-(instancetype)init NS_UNAVAILABLE
+{
+    NSAssert(NO, @"must call -initWithDelegate:");
+    @throw nil;
+}
+
 //---------------------------------------------------------- 
 // isKeyCode:andFlagsTaken:error:
 //---------------------------------------------------------- 

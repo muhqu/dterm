@@ -10,6 +10,12 @@
 
 @implementation DSNumberFormatterTransformer
 
+-(instancetype)init NS_UNAVAILABLE
+{
+    NSAssert(NO, @"must call -initWithNumberFormatter:");
+    @throw nil;
+}
+
 - (instancetype)initWithNumberFormatter:(NSNumberFormatter*)inFormatter {
 	if((self = [super init])) {
 		self.numberFormatter = inFormatter;
