@@ -1,3 +1,0 @@
-I believe this is the source to the last released DTerm. At this point, it's fairly old and so may not be a good model for modern apps with modern API, but this will allow dedicated users to update it for OS compatibility etc., and perhaps some of its ideas about context scraping can survive and be incorporated elsewhere.
-
-I also have a half-finished DTerm 2, but as it's still in the prototype stage I'm not bothering to put that together for release right now. Let me know if you're interested enough in adopting DTerm to where that'd be interesting to you.
