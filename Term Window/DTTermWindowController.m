@@ -77,6 +77,13 @@ static void * DTPreferencesContext = &DTPreferencesContext;
             [actionMenu removeItem:lastItem];
         } while(!wasSeparator && [actionMenu numberOfItems]);
     }
+    
+    // HUD style windows (utilizing the NSHUDWindowMask) now automatically utilize NSVisualEffectView to create a blurred background. Applications should set the NSAppearance with the name NSAppearanceNameVibrantDark on the window to get vibrant and dark controls.
+    //  https://developer.apple.com/library/mac/releasenotes/AppKit/RN-AppKit/ -- "AppKit Release Notes for OS X v10.10"
+    // self.window.appearance  = [NSAppearance appearanceNamed:NSAppearanceNameVibrant];
+    // WORKAROUND for 10.11 (beta?) issue of messed up text autocompletion UI for HUD panels ... view appears with black background + black text
+    // TODO: find better dark-mode handling
+    commandField.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
 }
 
 - (id)windowWillReturnFieldEditor:(NSWindow*)window toObject:(id)anObject {

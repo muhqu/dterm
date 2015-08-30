@@ -15,6 +15,9 @@
 }
 
 - (void)awakeFromNib {
+    // TODO: dark-mode handling ... also see DTTermWindowController.m:81
+    goPrevButton.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
+    goNextButton.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
 	[[goPrevButton cell] setBackgroundStyle:NSBackgroundStyleDark];
 	[[goNextButton cell] setBackgroundStyle:NSBackgroundStyleDark];
 }
