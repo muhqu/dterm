@@ -604,7 +604,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH=\"$HOME/bin:/usr/local/bin:$PATH\"\ncd \"$PROJECT_DIR\"\nSHA=$(git rev-parse --short HEAD)\nCOUNT=$(git rev-list --count HEAD)\necho \"*** Building Git Revision: $COUNT @ $SHA\"\nmkdir -p \"$TARGET_BUILD_DIR/include\"\necho \"#define REVISION 1.7.$COUNT\" >  $TARGET_BUILD_DIR/include/Revision.h\n\ngit diff --quiet\nif [[ $? -eq 0 ]]; then\n  echo \"#define REVISION_PUBLIC 1.7.$COUNT-$SHA\" >> $TARGET_BUILD_DIR/include/Revision.h\nelse\n  echo \"#define REVISION_PUBLIC 1.7.$COUNT-$SHA+\" >> $TARGET_BUILD_DIR/include/Revision.h\nfi\n";
+			shellScript = "PATH=\"$HOME/bin:/usr/local/bin:$PATH\"\ncd \"$PROJECT_DIR\"\nSHA=$(git rev-parse --short HEAD)\nCOUNT=$(git rev-list --count HEAD)\necho \"*** Building Git Revision: $COUNT @ $SHA\"\nmkdir -p \"$TARGET_BUILD_DIR/include\"\necho \"#define REVISION 1.8.$COUNT\" >  $TARGET_BUILD_DIR/include/Revision.h\n\ngit diff --quiet\nif [[ $? -eq 0 ]]; then\n  echo \"#define REVISION_PUBLIC 1.8.$COUNT-$SHA\" >> $TARGET_BUILD_DIR/include/Revision.h\nelse\n  echo \"#define REVISION_PUBLIC 1.8.$COUNT-$SHA+\" >> $TARGET_BUILD_DIR/include/Revision.h\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
