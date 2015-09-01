@@ -81,6 +81,7 @@
 		3B3E1FBA190C10C500B31D3E /* SRValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E1FB1190C10C500B31D3E /* SRValidator.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3B6316B4190D51B500D62E4E /* DTShellUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 257158E80CFF9A99007181F4 /* DTShellUtilities.m */; };
 		3B6316B6190D51E100D62E4E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B6316B5190D51E100D62E4E /* XCTest.framework */; };
+		3B899CA01B95FE630083FB9A /* WAYTheDarkSide.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B899C9F1B95FE630083FB9A /* WAYTheDarkSide.m */; settings = {ASSET_TAGS = (); }; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -200,6 +201,8 @@
 		3B3E1FB0190C10C500B31D3E /* SRValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRValidator.h; sourceTree = "<group>"; };
 		3B3E1FB1190C10C500B31D3E /* SRValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRValidator.m; sourceTree = "<group>"; };
 		3B6316B5190D51E100D62E4E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		3B899C9E1B95FE630083FB9A /* WAYTheDarkSide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WAYTheDarkSide.h; path = "3rd party source/WAYTheDarkSide.h"; sourceTree = "<group>"; };
+		3B899C9F1B95FE630083FB9A /* WAYTheDarkSide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WAYTheDarkSide.m; path = "3rd party source/WAYTheDarkSide.m"; sourceTree = "<group>"; };
 		75B0EC781A022E5900C023D1 /* iTerm2Nightly.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTerm2Nightly.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* DTerm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DTerm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -383,6 +386,8 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				3B899C9E1B95FE630083FB9A /* WAYTheDarkSide.h */,
+				3B899C9F1B95FE630083FB9A /* WAYTheDarkSide.m */,
 				3B3E1FA2190C10C500B31D3E /* ShortcutRecorder */,
 				32CA4F630368D1EE00C91783 /* DTerm_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
@@ -626,6 +631,7 @@
 				25229FF50CF8BEDE00DF702E /* DTTermWindowContentView.m in Sources */,
 				3B3E1FB8190C10C500B31D3E /* SRRecorderCell.m in Sources */,
 				2522A1020CFB540500DF702E /* DTResultsTextView.m in Sources */,
+				3B899CA01B95FE630083FB9A /* WAYTheDarkSide.m in Sources */,
 				2583733F0CFE105F00943791 /* DTResultsView.m in Sources */,
 				258373440CFE12A000943791 /* DTRunManager.m in Sources */,
 				3B3E1FB7190C10C500B31D3E /* SRKeyCodeTransformer.m in Sources */,
