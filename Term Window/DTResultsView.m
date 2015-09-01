@@ -15,7 +15,7 @@
 }
 
 - (void)awakeFromNib {
-    // TODO: dark-mode handling ... also see DTTermWindowController.m:81
+    // for some reason if we leave theses buttons with a "VibrantDark" appearance (when app is run in dark mode) they slightly mess with the UI by giving the line segment below them some extra highlight ... forcing them to Aqua (or VibrantLight) fixes that
     goPrevButton.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
     goNextButton.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
 	[[goPrevButton cell] setBackgroundStyle:NSBackgroundStyleDark];
