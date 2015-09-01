@@ -14,6 +14,8 @@
 #import "iTerm2Nightly.h"
 #import "Terminal.h"
 
+#import "WAYTheDarkSide.h"
+
 static void * DTPreferencesContext = &DTPreferencesContext;
 
 @implementation DTTermWindowController
@@ -78,21 +80,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
         } while(!wasSeparator && [actionMenu numberOfItems]);
     }
     
-    // HUD style windows (utilizing the NSHUDWindowMask) now automatically utilize NSVisualEffectView to create a blurred background. Applications should set the NSAppearance with the name NSAppearanceNameVibrantDark on the window to get vibrant and dark controls.
-    //  https://developer.apple.com/library/mac/releasenotes/AppKit/RN-AppKit/ -- "AppKit Release Notes for OS X v10.10"
-    BOOL isInDarkMode = [[[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"] isEqualToString:@"Dark"];
-    if (isInDarkMode)
-    {
-        self.window.appearance  = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
-        commandField.focusRingType = NSFocusRingTypeNone;
-    }
-    else
-    {
-        self.window.appearance  = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
-        // HACK: textfield doesn't handle highlighting text properly when in "VibrantLight" mode (no hightlight is visible)
-        // TODO: check if the workaround is still necessary on 10.11 release
-        commandField.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
-    }
+    [self setUpDarkModeHandling];
 }
 
 - (id)windowWillReturnFieldEditor:(NSWindow*)window toObject:(id)anObject {
@@ -482,6 +470,33 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 
 - (CGFloat)resultsCommandFontSize {
 	return 10.0;
+}
+
+- (void)setUpDarkModeHandling
+{
+    __weak typeof(self) weakSelf = self;
+
+    // dark
+    [WAYTheDarkSide welcomeApplicationWithBlock:^{
+        typeof(self) strongSelf = weakSelf;
+        // HUD style windows (utilizing the NSHUDWindowMask) now automatically utilize NSVisualEffectView to create a blurred background. Applications should set the NSAppearance with the name NSAppearanceNameVibrantDark on the window to get vibrant and dark controls.
+        //  https://developer.apple.com/library/mac/releasenotes/AppKit/RN-AppKit/ -- "AppKit Release Notes for OS X v10.10"
+        strongSelf.window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+        strongSelf->commandField.focusRingType = NSFocusRingTypeNone;
+        // HACK: textfield doesn't handle highlighting text properly when in "VibrantLight" mode (no hightlight is visible)
+        // TODO: check if the workaround is still necessary on 10.11 release
+        strongSelf->commandField.appearance = nil; // counteract hack (a few lines down)
+    } immediately:YES];
+
+    // light
+    [WAYTheDarkSide outcastApplicationWithBlock:^{
+        typeof(self) strongSelf = weakSelf;
+        strongSelf.window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+        strongSelf->commandField.focusRingType = NSFocusRingTypeDefault;
+        // HACK: textfield doesn't handle highlighting text properly when in "VibrantLight" mode (no hightlight is visible)
+        // TODO: check if the workaround is still necessary on 10.11 release
+        strongSelf->commandField.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
+    } immediately:YES];
 }
 
 @end
