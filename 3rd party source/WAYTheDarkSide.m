@@ -42,7 +42,7 @@ static NSMapTable *_WAYTheDarkSideLeavingBlocksMapTable;
 	[[NSDistributedNotificationCenter defaultCenter] addObserverForName:kWAYTheDarkSideAppleInterfaceThemeChangedNotification
 																 object:nil
 																  queue:[NSOperationQueue mainQueue]
-															 usingBlock:^(NSNotification *notification) {
+															 usingBlock:^(__unused NSNotification *notification) {
 																 BOOL isDarkMode = [self applicationIsOnTheDarkSide];
 																 // The blocks are only performed if an actual change happened
 																 if (!_WAYTheDarkSideValueKnown || _WAYTheDarkSideRecentValue!=isDarkMode) {
