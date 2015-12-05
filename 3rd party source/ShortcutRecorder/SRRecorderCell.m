@@ -16,36 +16,45 @@
 #import "SRKeyCodeTransformer.h"
 #import "SRValidator.h"
 
-@interface SRRecorderCell (Private)
-- (void)_privateInit;
-- (void)_createGradient;
-- (void)_setJustChanged;
-- (void)_startRecordingTransition;
-- (void)_endRecordingTransition;
-- (void)_transitionTick;
-- (void)_startRecording;
-- (void)_endRecording;
+@implementation SRRecorderCell {
+	NSGradient          *recordingGradient;
+	NSString            *autosaveName;
 
-- (BOOL)_effectiveIsAnimating;
-- (BOOL)_supportsAnimation;
+	BOOL                isRecording;
+	BOOL                mouseInsideTrackingArea;
+	BOOL                mouseDown;
 
-- (NSString *)_defaultsKeyForAutosaveName:(NSString *)name;
-- (void)_saveKeyCombo;
-- (void)_loadKeyCombo;
+	SRRecorderStyle		style;
 
-- (NSRect)_removeButtonRectForFrame:(NSRect)cellFrame;
-- (NSRect)_snapbackRectForFrame:(NSRect)cellFrame;
+	BOOL				isAnimating;
+	CGFloat				transitionProgress;
+	BOOL				isAnimatingNow;
+	BOOL				isAnimatingTowardsRecording;
+	BOOL				comboJustChanged;
 
-- (NSUInteger)_filteredCocoaFlags:(NSUInteger)flags;
-- (NSUInteger)_filteredCocoaToCarbonFlags:(NSUInteger)cocoaFlags;
-- (BOOL)_validModifierFlags:(NSUInteger)flags;
+	NSTrackingRectTag   removeTrackingRectTag;
+	NSTrackingRectTag   snapbackTrackingRectTag;
 
-- (BOOL)_isEmpty;
-@end
+	KeyCombo            keyCombo;
+	BOOL				hasKeyChars;
+	NSString		    *keyChars;
+	NSString		    *keyCharsIgnoringModifiers;
 
-#pragma mark -
+	NSUInteger        allowedFlags;
+	NSUInteger        requiredFlags;
+	NSUInteger        recordingFlags;
 
-@implementation SRRecorderCell
+	BOOL				allowsKeyOnly;
+	BOOL				escapeKeysRecord;
+
+	NSSet               *cancelCharacterSet;
+
+    SRValidator         *validator;
+
+	IBOutlet id         delegate;
+	BOOL				globalHotKeys;
+	void				*hotKeyModeToken;
+}
 
 - (id)init
 {
@@ -88,7 +97,7 @@
 		escapeKeysRecord = [[aDecoder decodeObjectForKey:@"escapeKeysRecord"] boolValue];
 		isAnimating = [[aDecoder decodeObjectForKey:@"isAnimating"] boolValue];
 		
-		style = [[aDecoder decodeObjectForKey:@"style"] unsignedIntegerValue];
+		style = (SRRecorderStyle)[[aDecoder decodeObjectForKey:@"style"] shortValue];
 	} else {
 		autosaveName = [aDecoder decodeObject];
 		
@@ -112,7 +121,7 @@
 	
 	if ([aCoder allowsKeyedCoding]) {
 		[aCoder encodeObject:[self autosaveName] forKey:@"autosaveName"];
-		[aCoder encodeObject:@(keyCombo.code) forKey:@"keyComboCode"];
+		[aCoder encodeObject:@((short)keyCombo.code) forKey:@"keyComboCode"];
 		[aCoder encodeObject:@(keyCombo.flags) forKey:@"keyComboFlags"];
 	
 		[aCoder encodeObject:@(allowedFlags) forKey:@"allowedFlags"];
@@ -127,11 +136,11 @@
 		[aCoder encodeObject:@(escapeKeysRecord) forKey:@"escapeKeysRecord"];
 		
 		[aCoder encodeObject:@(isAnimating) forKey:@"isAnimating"];
-		[aCoder encodeObject:@(style) forKey:@"style"];
+		[aCoder encodeObject:@((short)style) forKey:@"style"];
 	} else {
 		// Unkeyed archiving and encoding is deprecated and unsupported. Use keyed archiving and encoding.
 		[aCoder encodeObject: [self autosaveName]];
-		[aCoder encodeObject: @(keyCombo.code)];
+		[aCoder encodeObject: @((short)keyCombo.code)];
 		[aCoder encodeObject: @(keyCombo.flags)];
 		
 		[aCoder encodeObject: @(allowedFlags)];
@@ -1029,11 +1038,7 @@
 	return keyCharsIgnoringModifiers;
 }
 
-@end
-
-#pragma mark -
-
-@implementation SRRecorderCell (Private)
+#pragma mark - Private
 
 - (void)_privateInit
 {
@@ -1180,7 +1185,7 @@
 	{
 		id values = [[NSUserDefaultsController sharedUserDefaultsController] values];
 		
-		NSDictionary *defaultsValue = @{@"keyCode": @(keyCombo.code),
+		NSDictionary *defaultsValue = @{@"keyCode": @((short)keyCombo.code),
 			@"modifierFlags": @(keyCombo.flags), // cocoa
 			@"modifiers": @(SRCocoaToCarbonFlags(keyCombo.flags))};
 		

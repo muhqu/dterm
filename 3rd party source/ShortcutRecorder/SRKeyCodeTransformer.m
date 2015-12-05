@@ -12,19 +12,13 @@
 //      Jamie Kirkpatrick
 
 #import "SRKeyCodeTransformer.h"
-#import <Carbon/Carbon.h>
-#import <CoreServices/CoreServices.h>
+@import Carbon;
+@import CoreServices;
 #import "SRCommon.h"
 
 static NSMutableDictionary  *stringToKeyCodeDict = nil;
 static NSDictionary         *keyCodeToStringDict = nil;
 static NSArray              *padKeysArray        = nil;
-
-@interface SRKeyCodeTransformer( Private )
-+ (void) regenerateStringToKeyCodeMapping;
-@end
-
-#pragma mark -
 
 @implementation SRKeyCodeTransformer
 
@@ -128,6 +122,10 @@ static NSArray              *padKeysArray        = nil;
 }
 
 //---------------------------------------------------------- 
+//  dealloc
+//---------------------------------------------------------- 
+
+//---------------------------------------------------------- 
 //  transformedValue: 
 //---------------------------------------------------------- 
 - (id) transformedValue:(id)value
@@ -199,11 +197,7 @@ static NSArray              *padKeysArray        = nil;
     return stringToKeyCodeDict[value];
 }
 
-@end
-
-#pragma mark -
-
-@implementation SRKeyCodeTransformer( Private )
+#pragma mark - Private
 
 //---------------------------------------------------------- 
 //  regenerateStringToKeyCodeMapping: 

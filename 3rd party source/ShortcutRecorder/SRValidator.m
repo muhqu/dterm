@@ -31,18 +31,14 @@
     return self;
 }
 
--(instancetype)init NS_UNAVAILABLE
-{
-    NSAssert(NO, @"must call -initWithDelegate:");
-    @throw nil;
-}
-
 //---------------------------------------------------------- 
 // isKeyCode:andFlagsTaken:error:
 //---------------------------------------------------------- 
 - (BOOL) isKeyCode:(NSInteger)keyCode andFlagsTaken:(NSUInteger)flags error:(NSError * __autoreleasing *)error
 {
     // if we have a delegate, it goes first...
+	id <SRValidatorDelegate> delegate = self.delegate;
+
 	if ( delegate )
 	{
 		NSString *delegateReason = nil;
@@ -222,40 +218,6 @@
 		}
 	}
 	return NO;    
-}
-
-#pragma mark -
-#pragma mark accessors
-
-//---------------------------------------------------------- 
-//  delegate 
-//---------------------------------------------------------- 
-- (id) delegate
-{
-    return delegate; 
-}
-
-- (void) setDelegate: (id) theDelegate
-{
-    delegate = theDelegate; // Standard delegate pattern does not retain the delegate
-}
-
-@end
-
-#pragma mark -
-#pragma mark default delegate implementation
-
-@implementation NSObject( SRValidation )
-
-//---------------------------------------------------------- 
-// shortcutValidator:isKeyCode:andFlagsTaken:reason:
-//---------------------------------------------------------- 
-- (BOOL) shortcutValidator:(SRValidator *) __unused validator
-                 isKeyCode:(NSInteger) __unused keyCode
-             andFlagsTaken:(NSUInteger) __unused flags
-                    reason:(NSString * __autoreleasing *) __unused aReason
-{
-    return NO;
 }
 
 @end

@@ -11,54 +11,42 @@
 //      Jesper
 //      Jamie Kirkpatrick
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
 #import "SRRecorderCell.h"
 
+@protocol SRRecorderDelegate;
+
 @interface SRRecorderControl : NSControl
-{
-	IBOutlet id delegate;
-}
 
 #pragma mark *** Aesthetics ***
-- (BOOL)animates;
-- (void)setAnimates:(BOOL)an;
-- (SRRecorderStyle)style;
-- (void)setStyle:(SRRecorderStyle)nStyle;
+@property (assign)	BOOL			animates;
+@property (assign)	SRRecorderStyle	style;
 
 #pragma mark *** Delegate ***
-- (id)delegate;
-- (void)setDelegate:(id)aDelegate;
+@property	(assign) id <SRRecorderDelegate> delegate;
 
 #pragma mark *** Key Combination Control ***
 
-- (NSUInteger)allowedFlags;
-- (void)setAllowedFlags:(NSUInteger)flags;
+@property (assign)	NSUInteger	allowedFlags;
 
 - (BOOL)allowsKeyOnly;
 - (void)setAllowsKeyOnly:(BOOL)nAllowsKeyOnly escapeKeysRecord:(BOOL)nEscapeKeysRecord;
 - (BOOL)escapeKeysRecord;
 
-- (BOOL)canCaptureGlobalHotKeys;
-- (void)setCanCaptureGlobalHotKeys:(BOOL)inState;
-
-- (NSUInteger)requiredFlags;
-- (void)setRequiredFlags:(NSUInteger)flags;
-
-- (KeyCombo)keyCombo;
-- (void)setKeyCombo:(KeyCombo)aKeyCombo;
-
-- (NSString *)keyChars;
-- (NSString *)keyCharsIgnoringModifiers;
+@property (assign)		BOOL	canCaptureGlobalHotKeys;
+@property (assign)		NSUInteger	requiredFlags;
+@property (assign)		KeyCombo	keyCombo;
+@property (readonly)	NSString	*keyChars;
+@property (readonly)	NSString	*keyCharsIgnoringModifiers;
 
 #pragma mark *** Autosave Control ***
 
-- (NSString *)autosaveName;
-- (void)setAutosaveName:(NSString *)aName;
+@property (copy)	NSString	*autosaveName;
 
 #pragma mark -
 
 // Returns the displayed key combination if set
-- (NSString *)keyComboString;
+@property (readonly)	NSString	*keyComboString;
 
 #pragma mark *** Conversion Methods ***
 
@@ -67,13 +55,13 @@
 
 #pragma mark *** Binding Methods ***
 
-- (NSDictionary *)objectValue;
-- (void)setObjectValue:(NSDictionary *)shortcut;
+@property	(copy)	NSDictionary	*objectValue;
 
 @end
 
 // Delegate Methods
-@interface NSObject (SRRecorderDelegate)
+@protocol SRRecorderDelegate <NSObject>
+@optional
 - (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder isKeyCode:(NSInteger)keyCode andFlagsTaken:(NSUInteger)flags reason:(NSString **)aReason;
 - (void)shortcutRecorder:(SRRecorderControl *)aRecorder keyComboDidChange:(KeyCombo)newKeyCombo;
 @end

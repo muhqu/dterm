@@ -14,6 +14,7 @@
 
 #import "SRCommon.h"
 #import "SRKeyCodeTransformer.h"
+#import "tgmath.h"
 
 #include <IOKit/hidsystem/IOLLEvent.h>
 
@@ -41,7 +42,7 @@ NSString * SRStringForKeyCode( NSInteger keyCode )
     static SRKeyCodeTransformer *keyCodeTransformer = nil;
     if ( !keyCodeTransformer )
         keyCodeTransformer = [[SRKeyCodeTransformer alloc] init];
-    return [keyCodeTransformer transformedValue:@(keyCode)];
+    return [keyCodeTransformer transformedValue:@((short)keyCode)];
 }
 
 //---------------------------------------------------------- 
@@ -171,8 +172,7 @@ NSString *SRCharacterForKeyCodeAndCocoaFlags(NSInteger keyCode, NSUInteger cocoa
 	
 	UInt32              deadKeyState;
     OSStatus err = noErr;
-    NSLocale *locale = (__bridge_transfer NSLocale *)CFLocaleCopyCurrent();
-	
+
 	TISInputSourceRef tisSource = TISCopyCurrentKeyboardInputSource();
     if(!tisSource)
 		return FailWithNaiveString;
@@ -196,8 +196,11 @@ NSString *SRCharacterForKeyCodeAndCocoaFlags(NSInteger keyCode, NSUInteger cocoa
 
 	CFStringRef temp = CFStringCreateWithCharacters(kCFAllocatorDefault, unicodeString, 1);
 	CFMutableStringRef mutableTemp = CFStringCreateMutableCopy(kCFAllocatorDefault, 0, temp);
+    CFLocaleRef locale = CFLocaleCopyCurrent();
 
-	CFStringCapitalize(mutableTemp, (__bridge CFLocaleRef)locale);
+	CFStringCapitalize(mutableTemp, locale);
+
+	CFRelease(locale);
 
 	NSString *resultString = [NSString stringWithString:(__bridge NSString *)mutableTemp];
 
@@ -214,11 +217,7 @@ NSString *SRCharacterForKeyCodeAndCocoaFlags(NSInteger keyCode, NSUInteger cocoa
 #define CG_M_PI (CGFloat)M_PI
 #define CG_M_PI_2 (CGFloat)M_PI_2
 
-#ifdef __LP64__
 #define CGSin(x) sin(x)
-#else
-#define CGSin(x) sinf(x)
-#endif
 
 // From: http://developer.apple.com/samplecode/AnimatedSlider/ as "easeFunction"
 CGFloat SRAnimationEaseInOut(CGFloat t) {
@@ -240,8 +239,8 @@ CGFloat SRAnimationEaseInOut(CGFloat t) {
 + (NSAlert *) alertWithNonRecoverableError:(NSError *)error
 {
 	NSString *reason = [error localizedRecoverySuggestion];
-	return [self alertWithMessageText: [error localizedDescription]
-						defaultButton:[[error localizedRecoveryOptions] firstObject]
+	return [self alertWithMessageText:[error localizedDescription]
+						defaultButton:[error localizedRecoveryOptions][0U]
 					  alternateButton:nil
 						  otherButton:nil
 			informativeTextWithFormat:(reason ? reason : @""), nil];
@@ -250,19 +249,6 @@ CGFloat SRAnimationEaseInOut(CGFloat t) {
 @end
 
 static NSMutableDictionary *SRSharedImageCache = nil;
-
-@interface SRSharedImageProvider (Private)
-+ (void)_drawSRSnapback:(id)anNSCustomImageRep;
-+ (NSValue *)_sizeSRSnapback;
-+ (void)_drawSRRemoveShortcut:(id)anNSCustomImageRep;
-+ (NSValue *)_sizeSRRemoveShortcut;
-+ (void)_drawSRRemoveShortcutRollover:(id)anNSCustomImageRep;
-+ (NSValue *)_sizeSRRemoveShortcutRollover;
-+ (void)_drawSRRemoveShortcutPressed:(id)anNSCustomImageRep;
-+ (NSValue *)_sizeSRRemoveShortcutPressed;
-
-+ (void)_drawARemoveShortcutBoxUsingRep:(id)anNSCustomImageRep opacity:(CGFloat)opacity;
-@end
 
 @implementation SRSharedImageProvider
 + (NSImage *)supportingImageWithName:(NSString *)name {
@@ -277,14 +263,16 @@ static NSMutableDictionary *SRSharedImageCache = nil;
 		return cachedImage;
 	}
 	
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 //	NSLog(@"constructing image");
 	NSSize size;
-	NSValue *sizeValue = [self performSelector:NSSelectorFromString([NSString stringWithFormat:@"_size%@", name])];
+
+	SEL selector = NSSelectorFromString([NSString stringWithFormat:@"_size%@", name]);
+	IMP imp = [self methodForSelector:selector];
+	NSValue *(*func)(id, SEL) = (void *)imp;
+	NSValue *sizeValue = func(self, selector);
+
 	size = [sizeValue sizeValue];
 //	NSLog(@"size: %@", NSStringFromSize(size));
-#pragma clang diagnostic pop
 	
 	NSCustomImageRep *customImageRep = [[NSCustomImageRep alloc] initWithDrawSelector:NSSelectorFromString([NSString stringWithFormat:@"_draw%@:", name]) delegate:self];
 	[customImageRep setSize:size];
@@ -362,6 +350,7 @@ static NSMutableDictionary *SRSharedImageCache = nil;
 	[sh set];
 	
 	[bp fill];
+	
 }
 
 + (NSValue *)_sizeSRRemoveShortcut {

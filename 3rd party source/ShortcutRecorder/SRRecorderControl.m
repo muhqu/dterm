@@ -16,11 +16,9 @@
 
 #define SRCell (SRRecorderCell *)[self cell]
 
-@interface SRRecorderControl (Private)
-- (void)resetTrackingRects;
-@end
-
-@implementation SRRecorderControl
+@implementation SRRecorderControl {
+	IBOutlet id delegate;
+}
 
 + (void)initialize
 {
@@ -385,9 +383,7 @@
 	[boundObject setValue:value forKeyPath:boundKeyPath];
 }
 
-@end
-
-@implementation SRRecorderControl (Private)
+#pragma mark - Private
 
 - (void)resetTrackingRects
 {

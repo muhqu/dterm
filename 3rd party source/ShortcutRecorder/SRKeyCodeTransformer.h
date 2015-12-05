@@ -11,6 +11,6 @@
 //      Jesper
 //      Jamie Kirkpatrick
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
 
 @interface SRKeyCodeTransformer : NSValueTransformer {} @end
