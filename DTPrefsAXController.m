@@ -55,27 +55,31 @@
 - (IBAction)setAXTrusted:(id) __unused sender {
     BOOL isTrusted = [(DTAppController *)APP_DELEGATE isAXTrustedPromptIfNot:YES];
 
-    if ( !isTrusted )
+    if ( isTrusted )
     {
-        NSAlert* relaunchAlert = [NSAlert alertWithMessageText:NSLocalizedString(@"Trust settings updated", @"relaunch alert title")
-                                                 defaultButton:NSLocalizedString(@"Relaunch now",  @"relaunch alert default button")
-                                               alternateButton:NSLocalizedString(@"Relaunch later", @"relaunch alert alternate button")
-                                                   otherButton:nil
-                                     informativeTextWithFormat:NSLocalizedString(@"The new trust settings will take effect when DTerm is next launched.  Would you like to relaunch DTerm now?", @"relaunch alert text")];
-        if([relaunchAlert runModal] == NSAlertDefaultReturn) {
-            // This code borrowed from Sparkle, which was in turn borrowed from Allan Odgaard
-            NSString *currentAppPath = [[NSBundle mainBundle] bundlePath];
-            setenv("LAUNCH_PATH", [currentAppPath UTF8String], 1);
-            system("/bin/bash -c '{ for (( i = 0; i < 3000 && $(echo $(/bin/ps -xp $PPID|/usr/bin/wc -l))-1; i++ )); do\n"
-                   "    /bin/sleep .2;\n"
-                   "  done\n"
-                   "  if [[ $(/bin/ps -xp $PPID|/usr/bin/wc -l) -ne 2 ]]; then\n"
-                   "    /bin/sleep 1.0;\n"
-                   "    /usr/bin/open \"${LAUNCH_PATH}\"\n"
-                   "  fi\n"
-                   "} &>/dev/null &'");
-            [NSApp terminate:self];
-        }
+        return;
+    }
+
+    NSAlert* relaunchAlert = [[NSAlert alloc] init];
+    relaunchAlert.messageText = NSLocalizedString(@"Trust settings updated", @"relaunch alert title");
+    relaunchAlert.informativeText = NSLocalizedString(@"The new trust settings will take effect when DTerm is next launched.  Would you like to relaunch DTerm now?", @"relaunch alert text");
+    [relaunchAlert addButtonWithTitle:NSLocalizedString(@"Relaunch now",  @"relaunch alert default button")];
+    [relaunchAlert addButtonWithTitle:NSLocalizedString(@"Relaunch later", @"relaunch alert alternate button")];
+    
+    if([relaunchAlert runModal] == NSAlertFirstButtonReturn) {
+        // This code borrowed from Sparkle, which was in turn borrowed from Allan Odgaard
+        NSString *currentAppPath = [[NSBundle mainBundle] bundlePath];
+        setenv("LAUNCH_PATH", [currentAppPath UTF8String], 1);
+        system("/bin/bash -c '{ for (( i = 0; i < 3000 && $(echo $(/bin/ps -xp $PPID|/usr/bin/wc -l))-1; i++ )); do\n"
+               "    /bin/sleep .2;\n"
+               "  done\n"
+               "  if [[ $(/bin/ps -xp $PPID|/usr/bin/wc -l) -ne 2 ]]; then\n"
+               "    /bin/sleep 1.0;\n"
+               "    /usr/bin/open \"${LAUNCH_PATH}\"\n"
+               "  fi\n"
+               "} &>/dev/null &'");
+        [NSApp terminate:self];
     }
 }
+
 @end
