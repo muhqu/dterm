@@ -54,16 +54,14 @@
 
 #pragma mark accessibility support
 
-- (BOOL)accessibilityIsIgnored {
-	return NO;
+-(BOOL)isAccessibilityElement
+{
+    return YES;
 }
 
-- (id)accessibilityAttributeValue:(NSString*)attribute {
-	if([attribute isEqualToString:NSAccessibilityRoleAttribute]) {
-		return NSAccessibilityGroupRole;
-	} else {
-		return [super accessibilityAttributeValue:attribute];
-	}
+- (NSString *)accessibilityRole
+{
+    return NSAccessibilityGroupRole;
 }
 
 @end
