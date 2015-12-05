@@ -81,7 +81,7 @@
 		3B3E1FBA190C10C500B31D3E /* SRValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E1FB1190C10C500B31D3E /* SRValidator.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3B6316B4190D51B500D62E4E /* DTShellUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 257158E80CFF9A99007181F4 /* DTShellUtilities.m */; };
 		3B6316B6190D51E100D62E4E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B6316B5190D51E100D62E4E /* XCTest.framework */; };
-		3B899CA01B95FE630083FB9A /* WAYTheDarkSide.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B899C9F1B95FE630083FB9A /* WAYTheDarkSide.m */; settings = {ASSET_TAGS = (); }; };
+		3B899CA01B95FE630083FB9A /* WAYTheDarkSide.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B899C9F1B95FE630083FB9A /* WAYTheDarkSide.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -464,7 +464,6 @@
 				257159140CFFAA2C007181F4 /* Resources */,
 				257159150CFFAA2C007181F4 /* Sources */,
 				257159160CFFAA2C007181F4 /* Frameworks */,
-				257159170CFFAA2C007181F4 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -508,19 +507,6 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
-				Dutch,
-				sv,
-				cs,
-				pl,
-				pt_BR,
-				Russian,
-				Swedish,
-				zh_CN,
-				zh_TW,
 				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* DTerm */;
@@ -580,19 +566,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		257159170CFFAA2C007181F4 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
 		25A0CDC90DE500010042D226 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
