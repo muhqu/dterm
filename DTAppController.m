@@ -383,7 +383,7 @@ failedAXDocument:	;
 	NSArray* selectionURLStrings = nil;
 	NSRect frontWindowBounds = NSZeroRect;
 	
-	NSString* frontmostAppBundleID = [[NSWorkspace sharedWorkspace] activeApplication][@"NSApplicationBundleIdentifier"];
+	NSString* frontmostAppBundleID = [NSWorkspace sharedWorkspace].frontmostApplication.bundleIdentifier;
 	
 	// If the Finder is frontmost, talk to it using ScriptingBridge
 	if([frontmostAppBundleID isEqualToString:@"com.apple.finder"]) {
