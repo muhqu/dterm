@@ -18,8 +18,8 @@
     // for some reason if we leave theses buttons with a "VibrantDark" appearance (when app is run in dark mode) they slightly mess with the UI by giving the line segment below them some extra highlight ... forcing them to Aqua (or VibrantLight) fixes that
     goPrevButton.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
     goNextButton.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
-	[[goPrevButton cell] setBackgroundStyle:NSBackgroundStyleDark];
-	[[goNextButton cell] setBackgroundStyle:NSBackgroundStyleDark];
+	goPrevButton.cell.backgroundStyle = NSBackgroundStyleDark;
+	goNextButton.cell.backgroundStyle = NSBackgroundStyleDark;
 }
 
 - (void)drawRect:(NSRect)rect {
@@ -27,26 +27,26 @@
     
 	[[[NSColor whiteColor] colorWithAlphaComponent:0.7] setStroke];
 	
-	NSBezierPath* outlinePath = [NSBezierPath bezierPathWithRoundedRect:NSInsetRect([self bounds], 0.5, 0.5)
+	NSBezierPath* outlinePath = [NSBezierPath bezierPathWithRoundedRect:NSInsetRect(self.bounds, 0.5, 0.5)
 																xRadius:5.0 yRadius:5.0];
 	[outlinePath stroke];
 	
-	NSPoint startPoint = NSMakePoint(0.0, [self bounds].size.height - 18.0);
+	NSPoint startPoint = NSMakePoint(0.0, self.bounds.size.height - 18.0);
     startPoint = [self convertPointToBacking:startPoint];
 	startPoint.y = floor(startPoint.y) + 0.5;
     startPoint = [self convertPointFromBacking:startPoint];
 	
-	NSPoint endPoint = NSMakePoint([self bounds].size.width, startPoint.y);
+	NSPoint endPoint = NSMakePoint(self.bounds.size.width, startPoint.y);
 	
 	[NSBezierPath strokeLineFromPoint:startPoint
 							  toPoint:endPoint];
 }
 
 - (BOOL)performKeyEquivalent:(NSEvent*)event {
-	NSString* chars = [event charactersIgnoringModifiers];
+	NSString* chars = event.charactersIgnoringModifiers;
 	if([chars isEqualToString:@"c"] &&
-	   (([event modifierFlags] & NSDeviceIndependentModifierFlagsMask) == NSControlKeyMask)) {
-		[[[self window] windowController] cancelCurrentCommand:self];
+	   ((event.modifierFlags & NSDeviceIndependentModifierFlagsMask) == NSControlKeyMask)) {
+		[self.window.windowController cancelCurrentCommand:self];
 		return YES;
 	}
 	return [super performKeyEquivalent:event];

@@ -6,6 +6,13 @@
 #import "DTTermWindowController.h"
 #import "DTAppController.h"  // for -changeFont:
 
+@interface DTCommandFieldEditor ()
+{
+    DTTermWindowController* controller;
+}
+
+@end
+
 @implementation DTCommandFieldEditor
 
 @dynamic isFirstResponder;
@@ -30,25 +37,25 @@
 }
 
 - (BOOL)isFirstResponder {
-	return [[[controller window] firstResponder] isEqual:self];
+	return [controller.window.firstResponder isEqual:self];
 }
 
 - (void)insertTab:(id)sender {
 	// Need to have exactly one selection
-	NSArray* selectedRanges = [self selectedRanges];
-	if([selectedRanges count] == 1) {
+	NSArray* selectedRanges = self.selectedRanges;
+	if(selectedRanges.count == 1) {
 		// Selection needs to be zero length
-		NSRange selectedRange = [[selectedRanges firstObject] rangeValue];
+		NSRange selectedRange = [selectedRanges.firstObject rangeValue];
 		if(selectedRange.length == 0) {
 			// If it's at the end of the field, do the autocompletion
-			if(selectedRange.location == [[self string] length]) {
+			if(selectedRange.location == self.string.length) {
 				[self complete:sender];
 				return;
 			} else {
 				// If just before a space, do the autocompletion
 				selectedRange.length = 1;
-				NSString* nextChar = [[self string] substringWithRange:selectedRange];
-				if(!nextChar || ![nextChar length] || [[NSCharacterSet whitespaceCharacterSet] characterIsMember:[nextChar characterAtIndex:0]]) {
+				NSString* nextChar = [self.string substringWithRange:selectedRange];
+				if(!nextChar || !nextChar.length || [[NSCharacterSet whitespaceCharacterSet] characterIsMember:[nextChar characterAtIndex:0]]) {
 					[self complete:sender];
 					return;
 				}
@@ -60,15 +67,15 @@
 }
 
 - (NSRange)rangeForUserCompletion {
-	NSRange selectedRange = [[[self selectedRanges] firstObject] rangeValue];
-	NSString* str = [self string];
+	NSRange selectedRange = self.selectedRanges.firstObject.rangeValue;
+	NSString* str = self.string;
 	
 	return lastShellWordBeforeIndex(str, selectedRange.location);
 }
 
 - (NSArray*)completionsForPartialWordRange:(NSRange)charRange
 					   indexOfSelectedItem:(NSInteger*)index {
-	NSString* partialWord = [[self string] substringWithRange:charRange];
+	NSString* partialWord = [self.string substringWithRange:charRange];
 	if(!partialWord)
 		return nil;
 	
@@ -79,7 +86,7 @@
 	BOOL shouldBeEscaped = ![unescapedPath(partialWord) isEqualToString:partialWord] ||	// when unescaped, it was different (so was likely escaped in the first place)
 							[escapedPath(partialWord) isEqualToString:partialWord]; // or it doesn't change when escaped, meaning that there's been no need to escape yet
 	
-	NSMutableArray* completions = [NSMutableArray arrayWithCapacity:[rawCompletions count]];
+	NSMutableArray* completions = [NSMutableArray arrayWithCapacity:rawCompletions.count];
 	for(__strong NSString* completion in rawCompletions) {
 		if(shouldBeEscaped)
 			completion = escapedPath(completion);
@@ -99,10 +106,10 @@
 		
 		// If there's a common prefix, we just go ahead and insert it in this case and cancel completion, to behave like bash.
 		// The user can trigger completion again if they want the different options.
-		if([prefix length] && ![prefix isEqualToString:partialWord]) {
+		if(prefix.length && ![prefix isEqualToString:partialWord]) {
 			//NSLog(@"found common prefix: %@", prefix);
 			
-			NSRange replacementRange = [self rangeForUserCompletion];
+			NSRange replacementRange = self.rangeForUserCompletion;
 			
 			[self setSelectedRange:replacementRange];
 			[self insertText:prefix];
@@ -114,9 +121,9 @@
 		NSLog(@"Caught exception trying to find a common prefix: %@", e);
 	}
 	
-	if([completions count] <= 1)
+	if(completions.count <= 1)
 		return nil;
-	if([completions count])
+	if(completions.count)
 		*index = -1;
 	return completions;
 }

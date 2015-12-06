@@ -35,8 +35,7 @@ extern NSString* const DTFontSizeKey;
 - (IBAction)showAcknowledgments:(id)sender;
 - (IBAction)showLicense:(id)sender;
 
-- (KeyCombo)hotKey;
-- (void)setHotKey:(KeyCombo)newHotKey;
+@property KeyCombo hotKey;
 - (void)hotkeyPressed;
 
 - (void)saveHotKeyToUserDefaults;

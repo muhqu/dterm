@@ -21,7 +21,7 @@
 - (id)transformedValue:(id)aValue
 {
     NSFont *font = [NSFont fontWithName:aValue size:12];
-	return [font displayName];
+	return font.displayName;
 }
 
 

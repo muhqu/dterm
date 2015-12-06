@@ -2,9 +2,7 @@
 
 @class DTTermWindowController;
 
-@interface DTCommandFieldEditor : NSTextView {
-	DTTermWindowController* controller;
-}
+@interface DTCommandFieldEditor : NSTextView
 
 @property (nonatomic, readonly) BOOL isFirstResponder;
 

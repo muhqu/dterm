@@ -12,7 +12,7 @@
 @implementation DTProgressCancelButton
 
 - (void)awakeFromNib {
-	[[self cell] setBackgroundStyle:NSBackgroundStyleDark];
+	self.cell.backgroundStyle = NSBackgroundStyleDark;
 }
 
 #pragma mark Rollover management
@@ -38,7 +38,7 @@
 		
 		nextAnimImg = 0;
 		if(!animationTimer)
-			animationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0/[animationImages count])
+			animationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0/animationImages.count)
 															  target:self
 															selector:@selector(updateAnimation:)
 															userInfo:nil
@@ -58,7 +58,7 @@
 }
 
 - (void)updateAnimation:(NSTimer*) __unused timer {
-	if(![[self window] isVisible])
+	if(!self.window.visible)
 		return;
 	
 	if(!animationImages)
@@ -67,14 +67,14 @@
 	if(mouseInside)
 		return;
 	
-	[self setImage:animationImages[nextAnimImg]];
+	self.image = animationImages[nextAnimImg];
 	[self setNeedsDisplay];
-	nextAnimImg = (nextAnimImg+1) % [animationImages count];
+	nextAnimImg = (nextAnimImg+1) % animationImages.count;
 }
 
 - (void)updateImageForMouseInside:(BOOL)inside {
 	if(inside) {
-		[self setImage:[NSImage imageNamed:NSImageNameStopProgressFreestandingTemplate]];
+		self.image = [NSImage imageNamed:NSImageNameStopProgressFreestandingTemplate];
 	} else {
 		[self updateAnimation:nil];
 	}
@@ -95,7 +95,7 @@
 	
 	if(trackingArea)
 		[self removeTrackingArea:trackingArea];
-	trackingArea = [[NSTrackingArea alloc] initWithRect:[self visibleRect]
+	trackingArea = [[NSTrackingArea alloc] initWithRect:self.visibleRect
 												options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow | NSTrackingInVisibleRect)
 												  owner:self
 											   userInfo:nil];
@@ -103,8 +103,8 @@
 }
 
 - (void)viewDidMoveToWindow {
-	if([self window]) {
-		NSPoint loc=[self convertPoint:[[self window] mouseLocationOutsideOfEventStream] fromView:nil];
+	if(self.window) {
+		NSPoint loc=[self convertPoint:self.window.mouseLocationOutsideOfEventStream fromView:nil];
 		BOOL inside=([self hitTest:loc]==self);
 		[self updateImageForMouseInside:inside];
 	}

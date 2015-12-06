@@ -171,9 +171,9 @@ OSStatus DTHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
 	NSNumber* newFlags = hotKeyDict[@"flags"];
 	NSNumber* newCode = hotKeyDict[@"code"];
 	if(newFlags)
-		myHotKey.flags = [newFlags unsignedIntValue];
+		myHotKey.flags = newFlags.unsignedIntValue;
 	if(newCode)
-		myHotKey.code = [newCode shortValue];
+		myHotKey.code = newCode.shortValue;
 	
 	[self setHotKey:myHotKey];
 }
@@ -243,8 +243,8 @@ OSStatus DTHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
 	}
 	
 	if(CFGetTypeID(axURL) == CFURLGetTypeID()) {
-		if([(__bridge NSURL*)axURL isFileURL])
-			return [(__bridge NSURL*)axURL absoluteString];
+		if(((__bridge NSURL*)axURL).fileURL)
+			return ((__bridge NSURL*)axURL).absoluteString;
 		else
 			return nil;
 	}
@@ -331,7 +331,7 @@ failedAXDocument:	;
 		}
 		
 		// If we have selection URLs now, grab the window the focused UI element belongs to
-		if([tmpSelectionURLs count]) {
+		if(tmpSelectionURLs.count) {
 			CFTypeRef focusWindow = NULL;
 			axErr = AXUIElementCopyAttributeValue(focusedUIElement, kAXWindowAttribute, &focusWindow);
 			CF_AUTORELEASE(focusWindow);
@@ -370,7 +370,7 @@ failedAXDocument:	;
 //	NSLog(@"AXAPIEnabled %d, AXIsProcessTrusted %d", AXAPIEnabled(), AXIsProcessTrusted());
 	
 	// See if it's already visible
-	if([[termWindowController window] isVisible]) {
+	if(termWindowController.window.visible) {
 		// Yep, it's visible...does the user want us to deactivate?
 		if([[NSUserDefaults standardUserDefaults] boolForKey:DTHotkeyAlsoDeactivatesKey])
 			[termWindowController deactivate];
@@ -396,7 +396,7 @@ failedAXDocument:	;
 //				  [[finder.insertionLocation get] valueForKey:@"URL"]);
 			
 			NSArray* selection = [finder.selection get];
-			if(![selection count]) {
+			if(!selection.count) {
 				SBObject* insertionLocation = [finder.insertionLocation get];
 				if(!insertionLocation)
 					return;
@@ -422,8 +422,8 @@ failedAXDocument:	;
 		@try {
 			NSString* insertionLocationURL = [[finder.insertionLocation get] valueForKey:@"URL"];
 			if(insertionLocationURL) {
-				NSString* path = [[NSURL URLWithString:insertionLocationURL] path];
-				if([[path lastPathComponent] isEqualToString:@"Desktop"])
+				NSString* path = [NSURL URLWithString:insertionLocationURL].path;
+				if([path.lastPathComponent isEqualToString:@"Desktop"])
 					workingDirectory = path;
 			}
 		}
@@ -443,7 +443,7 @@ failedAXDocument:	;
 						NSURL* url = [NSURL URLWithString:urlString];
 						if(url && [url isFileURL]) {
 							frontWindowBounds = frontWindow.bounds;
-							workingDirectory = [url path];
+							workingDirectory = url.path;
 						}
 					}
 				}
@@ -461,7 +461,7 @@ failedAXDocument:	;
 		// Selection URLs
 		@try {
 			NSArray* selection = pf.selection;
-			if([selection count]) {
+			if(selection.count) {
 				selectionURLStrings = [selection valueForKey:@"URL"];
 			}
 		}
@@ -471,16 +471,16 @@ failedAXDocument:	;
 		
 		@try {
 			SBElementArray* finderWindows = [pf finderWindows];
-			if([finderWindows count]) {
-				PathFinderFinderWindow* frontWindow = [finderWindows firstObject];
+			if(finderWindows.count) {
+				PathFinderFinderWindow* frontWindow = finderWindows.firstObject;
 				// [frontWindow exists] returns false here (???), but it works anyway
 				frontWindowBounds = frontWindow.bounds;
 				frontWindowBounds.origin.y += 20.0;
 				
 				NSString* urlString = [[frontWindow.target get] valueForKey:@"URL"];
 				NSURL* url = [NSURL URLWithString:urlString];
-				if(url && [url isFileURL])
-					workingDirectory = [url path];
+				if(url && url.fileURL)
+					workingDirectory = url.path;
 			}
 		}
 		@catch (NSException* e) {
@@ -533,18 +533,18 @@ done:
 		if((noErr == LSCopyItemInfoForURL((__bridge CFURLRef)frontWindowURL, kLSRequestAllFlags, &outItemInfo)) &&
 		   ((outItemInfo.flags & kLSItemInfoIsPackage) || !(outItemInfo.flags & kLSItemInfoIsContainer))) {
 			// It's a package or not a container (i.e. a file); use its parent as the WD
-			workingDirectory = [[frontWindowURL path] stringByDeletingLastPathComponent];
+			workingDirectory = frontWindowURL.path.stringByDeletingLastPathComponent;
 		} else {
 			// It's not a package; use it directly as the WD
-			workingDirectory = [frontWindowURL path];
+			workingDirectory = frontWindowURL.path;
 		}
 	}
 	
 	// If there's no explicit WD but we have a selection, try to deduce a working directory from that
-	if(!workingDirectory && [selectionURLStrings count]) {
-		NSURL* url = [NSURL URLWithString:[selectionURLStrings firstObject]];
-		NSString* path = [url path];
-		workingDirectory = [path stringByDeletingLastPathComponent];
+	if(!workingDirectory && selectionURLStrings.count) {
+		NSURL* url = [NSURL URLWithString:selectionURLStrings.firstObject];
+		NSString* path = url.path;
+		workingDirectory = path.stringByDeletingLastPathComponent;
 	}
 	
 	// default to the home directory if we *still* don't have an explicit WD
@@ -567,17 +567,17 @@ done:
 #pragma mark URL actions
 
 - (void)getURL:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *) __unused replyEvent {
-	NSString* urlString = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
+	NSString* urlString = [event paramDescriptorForKeyword:keyDirectObject].stringValue;
 	NSURL* url = [NSURL URLWithString:urlString];
 	
-	if(![[url scheme] isEqualToString:@"dterm"])
+	if(![url.scheme isEqualToString:@"dterm"])
 		return;
 	
-	NSString* service = [url host];
+	NSString* service = url.host;
 	
 	// Preferences
 	if([service isEqualToString:@"prefs"]) {
-		NSString* prefsName = [url path];
+		NSString* prefsName = url.path;
 		if([prefsName isEqualToString:@"/general"])
 			[self.prefsWindowController showGeneral:self];
 		else if([prefsName isEqualToString:@"/accessibility"])
@@ -614,7 +614,7 @@ done:
 	
 	// Get selected font
 	NSFontManager *fontManager = [NSFontManager sharedFontManager];
-	NSFont *selectedFont = [fontManager selectedFont];
+	NSFont *selectedFont = fontManager.selectedFont;
 	if(!selectedFont) {
 		selectedFont = [NSFont systemFontOfSize:[NSFont systemFontSize]];
 	}
@@ -623,11 +623,11 @@ done:
 	// Get and store details of selected font
 	// Note: use fontName, not displayName.  The font name identifies the font to
 	// the system, we use a value transformer to show the user the display name
-	NSNumber *fontSize = @([panelFont pointSize]);
+	NSNumber *fontSize = @(panelFont.pointSize);
 	
 	id currentPrefsValues =
-	[[NSUserDefaultsController sharedUserDefaultsController] values];
-	[currentPrefsValues setValue:[panelFont fontName] forKey:DTFontNameKey];
+	[NSUserDefaultsController sharedUserDefaultsController].values;
+	[currentPrefsValues setValue:panelFont.fontName forKey:DTFontNameKey];
 	[currentPrefsValues setValue:fontSize forKey:DTFontSizeKey];
 }
 

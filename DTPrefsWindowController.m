@@ -31,12 +31,12 @@
 
 // Don't allow closing if we can't commit editing
 - (BOOL)windowShouldClose:(id) __unused window {
-	return [[self window] makeFirstResponder:nil];
+	return [self.window makeFirstResponder:nil];
 }
 
 - (void)windowDidLoad {
 	[shortcutRecorder setAllowsKeyOnly:NO escapeKeysRecord:NO];
-	[shortcutRecorder setKeyCombo:[APP_DELEGATE hotKey]];
+	shortcutRecorder.keyCombo = [APP_DELEGATE hotKey];
 }
 
 - (void)windowDidBecomeKey:(NSNotification *) __unused notification {
@@ -44,11 +44,11 @@
 }
 
 - (IBAction)showPrefs:(id)sender {
-	if(![[self window] isVisible])
+	if(!self.window.visible)
 		[self showGeneral:sender];
 	else {
-		[[self window] center];
-		[[self window] makeKeyAndOrderFront:sender];
+		[self.window center];
+		[self.window makeKeyAndOrderFront:sender];
 	}
 }
 
@@ -75,28 +75,28 @@
 }
 
 - (void)showView:(NSView*)prefsView {
-	NSWindow* prefsWindow = [self window];
+	NSWindow* prefsWindow = self.window;
 	
 	//blank view to stop flicker
-	NSView *tempView = [[NSView alloc] initWithFrame:[[prefsWindow contentView] frame]];
-    [prefsWindow setContentView:tempView];
+	NSView *tempView = [[NSView alloc] initWithFrame:prefsWindow.contentView.frame];
+    prefsWindow.contentView = tempView;
     
     //mojo to get the right frame for the new window.
-    NSRect newFrame = [prefsWindow frame];
-    newFrame.size.height = [prefsView frame].size.height + 
-	([prefsWindow frame].size.height - [[prefsWindow contentView] frame].size.height);
-    newFrame.size.width = [prefsView frame].size.width;
-    newFrame.origin.y += ([[prefsWindow contentView] frame].size.height - [prefsView frame].size.height);
+    NSRect newFrame = prefsWindow.frame;
+    newFrame.size.height = prefsView.frame.size.height + 
+	(prefsWindow.frame.size.height - prefsWindow.contentView.frame.size.height);
+    newFrame.size.width = prefsView.frame.size.width;
+    newFrame.origin.y += (prefsWindow.contentView.frame.size.height - prefsView.frame.size.height);
     
     //set the frame to newFrame and animate it. (change animate:YES to animate:NO if you don't want this)
 //    [prefsWindow setShowsResizeIndicator:YES];
     [prefsWindow setFrame:newFrame display:YES animate:YES];
     //set the main content view to the new view
-    [prefsWindow setContentView:prefsView];
+    prefsWindow.contentView = prefsView;
 	
-	if (![prefsWindow isVisible]) {
-		[[self window] center];
-		[[self window] makeKeyAndOrderFront:self];
+	if (!prefsWindow.visible) {
+		[self.window center];
+		[self.window makeKeyAndOrderFront:self];
 	}
 }
 
@@ -109,10 +109,10 @@
 	[self window];
 	
 	// This method can be called programmatically, so make sure general toolbar icon is selected
-	NSToolbar* toolbar = [[self window] toolbar];
-	for(NSToolbarItem* item in [toolbar items]) {
-		if([item tag] == 1 /* general tag */) {
-			[toolbar setSelectedItemIdentifier:[item itemIdentifier]];
+	NSToolbar* toolbar = self.window.toolbar;
+	for(NSToolbarItem* item in toolbar.items) {
+		if(item.tag == 1 /* general tag */) {
+			toolbar.selectedItemIdentifier = item.itemIdentifier;
 			break;
 		}
 	}
@@ -124,10 +124,10 @@
 	[self window];
 	
 	// This method can be called programmatically, so make sure accessibility toolbar icon is selected
-	NSToolbar* toolbar = [[self window] toolbar];
-	for(NSToolbarItem* item in [toolbar items]) {
-		if([item tag] == 2 /* accessibility tag */) {
-			[toolbar setSelectedItemIdentifier:[item itemIdentifier]];
+	NSToolbar* toolbar = self.window.toolbar;
+	for(NSToolbarItem* item in toolbar.items) {
+		if(item.tag == 2 /* accessibility tag */) {
+			toolbar.selectedItemIdentifier = item.itemIdentifier;
 			break;
 		}
 	}
@@ -140,10 +140,10 @@
 	[self window];
 	
 	// This method can be called programmatically, so make sure updates toolbar icon is selected
-	NSToolbar* toolbar = [[self window] toolbar];
-	for(NSToolbarItem* item in [toolbar items]) {
-		if([item tag] == 3 /* updates tag */) {
-			[toolbar setSelectedItemIdentifier:[item itemIdentifier]];
+	NSToolbar* toolbar = self.window.toolbar;
+	for(NSToolbarItem* item in toolbar.items) {
+		if(item.tag == 3 /* updates tag */) {
+			toolbar.selectedItemIdentifier = item.itemIdentifier;
 			break;
 		}
 	}
@@ -155,7 +155,7 @@
 
 - (IBAction)showFontPanel:(id) __unused sender {
 	// Get font name and size from user defaults
-	NSDictionary *values = [[NSUserDefaultsController sharedUserDefaultsController] values];
+	NSDictionary *values = [NSUserDefaultsController sharedUserDefaultsController].values;
 	NSString *fontName = [values valueForKey:DTFontNameKey];
 	CGFloat fontSize = [[values valueForKey:DTFontSizeKey] floatValue];
 	
@@ -169,7 +169,7 @@
     [[NSFontManager sharedFontManager] orderFrontFontPanel:self];
 	
 	// Set window as firstResponder so we get changeFont: messages
-    [[self window] makeFirstResponder:[self window]];
+    [self.window makeFirstResponder:self.window];
 }
 
 - (IBAction)resetColorAndFont:(id) __unused sender {

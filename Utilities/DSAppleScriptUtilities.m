@@ -13,7 +13,7 @@
 	if(!result)
 		return nil;
 	
-	return [result stringValue];
+	return result.stringValue;
 }
 
 + (BOOL)bringApplicationToFront:(NSString*)appName error:(NSDictionary * __autoreleasing *)error {

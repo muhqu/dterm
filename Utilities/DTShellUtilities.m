@@ -13,8 +13,8 @@ static NSCharacterSet* charactersToEscape() {
 NSString* escapedPath(NSString* path) {
 	NSCharacterSet* charsToEscape = charactersToEscape();
 	
-	NSMutableString* escapedPath = [NSMutableString stringWithCapacity:[path length]];
-	for(NSUInteger i=0; i<[path length]; i++) {
+	NSMutableString* escapedPath = [NSMutableString stringWithCapacity:path.length];
+	for(NSUInteger i=0; i<path.length; i++) {
 		unichar ch = [path characterAtIndex:i];
 		
 		if([charsToEscape characterIsMember:ch])
@@ -33,8 +33,8 @@ NSString* unescapedPath(NSString* path) {
 	
 	BOOL lastCharWasBackslash = NO;
 	
-	NSMutableString* unescapedPath = [NSMutableString stringWithCapacity:[path length]];
-	for(NSUInteger i=0; i<[path length]; i++) {
+	NSMutableString* unescapedPath = [NSMutableString stringWithCapacity:path.length];
+	for(NSUInteger i=0; i<path.length; i++) {
 		unichar ch = [path characterAtIndex:i];
 		
 		if((ch != '\\') && [charsToEscape characterIsMember:ch] && !lastCharWasBackslash) {

@@ -25,7 +25,7 @@
 		sharedPath = [[NSUserDefaults standardUserDefaults] stringForKey:DTUserDefault_ShellPath];
 		
 		if(!sharedPath || ![sharedPath hasPrefix:@"/"]) {
-			NSDictionary* env = [[NSProcessInfo processInfo] environment];
+			NSDictionary* env = [NSProcessInfo processInfo].environment;
 			sharedPath = env[@"SHELL"];
 		}
 		
@@ -37,7 +37,7 @@
 }
 
 + (NSArray*)argumentsToRunCommand:(NSString*)command {
-	NSString* shell = [[DTRunManager shellPath] lastPathComponent];
+	NSString* shell = [DTRunManager shellPath].lastPathComponent;
 	if([shell isEqualToString:@"bash"] || [shell isEqualToString:@"sh"])
 		return @[@"-l", @"-i", @"-c", command];
 	else
@@ -65,17 +65,17 @@
 		NSMutableString* selectedFilesEnvString = [NSMutableString string];
 		for(NSString* urlString in _selection) {
 			NSURL* url = [NSURL URLWithString:urlString];
-			if([url isFileURL]) {
-				NSString* newPath = [url path];
+			if(url.isFileURL) {
+				NSString* newPath = url.path;
 				
-				if([selectedFilesEnvString length])
+				if(selectedFilesEnvString.length)
 					[selectedFilesEnvString appendString:@" "];
 				
 				[selectedFilesEnvString appendString:newPath];
 			}
 		}
-		if([selectedFilesEnvString length])
-			setenv("DTERM_SELECTED_FILES", [selectedFilesEnvString fileSystemRepresentation], 1);
+		if(selectedFilesEnvString.length)
+			setenv("DTERM_SELECTED_FILES", selectedFilesEnvString.fileSystemRepresentation, 1);
 		else
 			unsetenv("DTERM_SELECTED_FILES");
 		
@@ -93,19 +93,19 @@
 - (void)launch {
 	// Set up basic task parameters
 	self.task = [[NSTask alloc] init];
-	[task setCurrentDirectoryPath:self.workingDirectory];
-	[task setLaunchPath:[DTRunManager shellPath]];
-	[task setArguments:[DTRunManager argumentsToRunCommand:self.command]];
+	task.currentDirectoryPath = self.workingDirectory;
+	task.launchPath = [DTRunManager shellPath];
+	task.arguments = [DTRunManager argumentsToRunCommand:self.command];
 	
 	// Attach pipe to task's standard output
 	NSPipe* newPipe = [NSPipe pipe];
-	stdOut = [newPipe fileHandleForReading];
-	[task setStandardOutput:newPipe];
+	stdOut = newPipe.fileHandleForReading;
+	task.standardOutput = newPipe;
 	
 	// Attach pipe to task's standard err
 	newPipe = [NSPipe pipe];
-	stdErr = [newPipe fileHandleForReading];
-	[task setStandardError:newPipe];
+	stdErr = newPipe.fileHandleForReading;
+	task.standardError = newPipe;
 	
 //	NSLog(@"Executing command %@ with args %@ in WD %@", [task launchPath], [[task arguments] componentsJoinedByString:@" "], [task currentDirectoryPath]);
 	
@@ -138,18 +138,18 @@
 }
 
 - (void)readData:(NSNotification*)notification {
-	id fileHandle = [notification object];
-    NSData  *data = [notification userInfo][NSFileHandleNotificationDataItem];
+	id fileHandle = notification.object;
+    NSData  *data = notification.userInfo[NSFileHandleNotificationDataItem];
     
     if ((fileHandle != stdOut) && (fileHandle != stdErr))
     {
         return;
     }
     
-    if([data length]) {
+    if(data.length) {
         // Data was returned; append it
         if(!unprocessedResultsData)
-            unprocessedResultsData = [NSMutableData dataWithCapacity:[data length]];
+            unprocessedResultsData = [NSMutableData dataWithCapacity:data.length];
         [unprocessedResultsData appendData:data];
         
         [self processResultsData];
@@ -196,16 +196,16 @@
 #define ASCII_ESC	0x1B
 
 - (void)processResultsData {
-	if(![unprocessedResultsData length])
+	if(!unprocessedResultsData.length)
 		return;
 	
-	const UInt8* data = [unprocessedResultsData bytes];
-	NSUInteger remainingLength = [unprocessedResultsData length];
+	const UInt8* data = unprocessedResultsData.bytes;
+	NSUInteger remainingLength = unprocessedResultsData.length;
 	
 	[resultsStorage beginEditing];
 	
 	// Add our trailing whitespace back on
-	if([trailingWhitespace length])
+	if(trailingWhitespace.length)
 		[resultsStorage appendAttributedString:trailingWhitespace];
 	trailingWhitespace = nil;
 	
@@ -268,13 +268,13 @@
 			remainingLength--;
 			
 			// Go back until we find a newline
-			while(cursorLoc && ([[resultsStorage string] characterAtIndex:(cursorLoc-1)] != '\n'))
+			while(cursorLoc && ([resultsStorage.string characterAtIndex:(cursorLoc-1)] != '\n'))
 				cursorLoc--;
 		}
 		
 		// Handle cursor not at end of string
-		else if(cursorLoc != [resultsStorage length]) {
-			unichar oldChar = [[resultsStorage string] characterAtIndex:cursorLoc];
+		else if(cursorLoc != resultsStorage.length) {
+			unichar oldChar = [resultsStorage.string characterAtIndex:cursorLoc];
 			unichar newChar = data[0];
 			
 			if(oldChar == newChar) {
@@ -291,10 +291,10 @@
 										range:NSMakeRange(cursorLoc, 1)];
 			} else if(newChar == '\n') {
 				// For newlines, seek forward to the next newline
-				while((cursorLoc < [resultsStorage length]) && ([[resultsStorage string] characterAtIndex:cursorLoc] != '\n'))
+				while((cursorLoc < resultsStorage.length) && ([resultsStorage.string characterAtIndex:cursorLoc] != '\n'))
 					cursorLoc++;
 				// If we're at the end, we didn't find one, so append one
-				if(cursorLoc == [resultsStorage length])
+				if(cursorLoc == resultsStorage.length)
 					[resultsStorage appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"
 																						   attributes:[currentAttributes copy]]];
 				
@@ -344,7 +344,7 @@
 					
 				data += lengthOfNormalString;
 				remainingLength -= lengthOfNormalString;
-				cursorLoc += [plainString length];
+				cursorLoc += plainString.length;
 				
 				
 			}
@@ -353,11 +353,11 @@
 	
 	// Pull any trailing whitespace off
 	NSCharacterSet* wsChars = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-	NSUInteger wsStart = [resultsStorage length];
-	while((wsStart > 0) && [wsChars characterIsMember:[[resultsStorage string] characterAtIndex:(wsStart-1)]])
+	NSUInteger wsStart = resultsStorage.length;
+	while((wsStart > 0) && [wsChars characterIsMember:[resultsStorage.string characterAtIndex:(wsStart-1)]])
 		wsStart--;
-	if(wsStart < [resultsStorage length]) {
-		NSRange wsRange = NSMakeRange(wsStart, [resultsStorage length]-wsStart);
+	if(wsStart < resultsStorage.length) {
+		NSRange wsRange = NSMakeRange(wsStart, resultsStorage.length-wsStart);
 		trailingWhitespace = [resultsStorage attributedSubstringFromRange:wsRange];
 		[resultsStorage deleteCharactersInRange:wsRange];
 	}
@@ -365,10 +365,10 @@
 	[resultsStorage endEditing];
 	
 	if(remainingLength) {
-		if(remainingLength != [unprocessedResultsData length])
+		if(remainingLength != unprocessedResultsData.length)
 			unprocessedResultsData = [NSMutableData dataWithBytes:data length:remainingLength];
 	} else {
-		[unprocessedResultsData setLength:0];
+		unprocessedResultsData.length = 0;
 	}
 }
 
@@ -380,7 +380,7 @@
 			NSColor* bgColor = currentAttributes[NSBackgroundColorAttributeName];
 			
 			for(NSString* paramString in params) {
-				switch([paramString integerValue]) {
+				switch(paramString.integerValue) {
 					case 0:		// turn off all attributes
 						fgColor = nil;
 						bgColor = nil;
@@ -521,8 +521,8 @@
 			}
 			
 			NSColor* standardFGColor = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:DTTextColorKey]];
-			fgColor = ( fgColor ? [fgColor colorWithAlphaComponent:[standardFGColor alphaComponent]] : standardFGColor );
-			bgColor = [bgColor colorWithAlphaComponent:[standardFGColor alphaComponent]];
+			fgColor = ( fgColor ? [fgColor colorWithAlphaComponent:standardFGColor.alphaComponent] : standardFGColor );
+			bgColor = [bgColor colorWithAlphaComponent:standardFGColor.alphaComponent];
 			
 			currentAttributes[NSForegroundColorAttributeName] = fgColor;
 			if(bgColor)
@@ -544,9 +544,9 @@
 
 - (IBAction)cancel:(id) __unused sender {
 	@try {
-		if([task isRunning]) {
+		if(task.running) {
 			// Bash catches basically all signals, but terminates on SIGHUP, terminating subprocesses as well
-			kill([task processIdentifier], SIGHUP);
+			kill(task.processIdentifier, SIGHUP);
 		}
 		
 		self.task = nil;
@@ -564,7 +564,7 @@
 	[resultsStorage beginEditing];
 	[resultsStorage addAttribute:NSFontAttributeName
 						   value:font
-						   range:NSMakeRange(0, [resultsStorage length])];
+						   range:NSMakeRange(0, resultsStorage.length)];
 	[resultsStorage endEditing];
 	
 	currentAttributes[NSFontAttributeName] = font;
@@ -574,7 +574,7 @@
 	[resultsStorage beginEditing];
 	[resultsStorage addAttribute:NSForegroundColorAttributeName
 						   value:color
-						   range:NSMakeRange(0, [resultsStorage length])];
+						   range:NSMakeRange(0, resultsStorage.length)];
 	[resultsStorage endEditing];
 	
 	currentAttributes[NSForegroundColorAttributeName] = color;

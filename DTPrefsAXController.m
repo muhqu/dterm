@@ -68,8 +68,8 @@
     
     if([relaunchAlert runModal] == NSAlertFirstButtonReturn) {
         // This code borrowed from Sparkle, which was in turn borrowed from Allan Odgaard
-        NSString *currentAppPath = [[NSBundle mainBundle] bundlePath];
-        setenv("LAUNCH_PATH", [currentAppPath UTF8String], 1);
+        NSString *currentAppPath = [NSBundle mainBundle].bundlePath;
+        setenv("LAUNCH_PATH", currentAppPath.UTF8String, 1);
         system("/bin/bash -c '{ for (( i = 0; i < 3000 && $(echo $(/bin/ps -xp $PPID|/usr/bin/wc -l))-1; i++ )); do\n"
                "    /bin/sleep .2;\n"
                "  done\n"

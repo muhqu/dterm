@@ -54,7 +54,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 }
 
 - (void)windowDidLoad {
-	NSPanel* panel = (NSPanel*)[self window];
+	NSPanel* panel = (NSPanel*)self.window;
 	[panel setHidesOnDeactivate:NO];
 	
 	// Bind the results text storage up
@@ -64,9 +64,9 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 				  options:nil];
 	
 	// Swap in the results view for its placeholder
-	[resultsView setFrame:[placeholderForResultsView frame]];
+	resultsView.frame = placeholderForResultsView.frame;
 	[placeholderForResultsView removeFromSuperview];
-	[[[self window] contentView] addSubview:resultsView];
+	[self.window.contentView addSubview:resultsView];
 	
 	// Remove the excess action menu items if we're showing the dock icon
     if( ![[NSBundle mainBundle] objectForInfoDictionaryKey:@"LSUIElement"] ) {
@@ -74,17 +74,17 @@ static void * DTPreferencesContext = &DTPreferencesContext;
         // Remove the menu items up to the last separator
         BOOL wasSeparator = NO;
         do {
-            NSMenuItem* lastItem = [actionMenu itemAtIndex:([actionMenu numberOfItems]-1)];
-            wasSeparator = [lastItem isSeparatorItem];
+            NSMenuItem* lastItem = [actionMenu itemAtIndex:(actionMenu.numberOfItems-1)];
+            wasSeparator = lastItem.separatorItem;
             [actionMenu removeItem:lastItem];
-        } while(!wasSeparator && [actionMenu numberOfItems]);
+        } while(!wasSeparator && actionMenu.numberOfItems);
     }
     
     [self setUpDarkModeHandling];
 }
 
 - (id)windowWillReturnFieldEditor:(NSWindow*)window toObject:(id)anObject {
-	if(window != [self window])
+	if(window != self.window)
 		return nil;
 	if(anObject != commandField)
 		return nil;
@@ -99,11 +99,11 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 - (void)setCommand:(NSString*)newCommand {
 	command = newCommand;
 	
-	id firstResponder = [[self window] firstResponder];
+	id firstResponder = self.window.firstResponder;
 	if([firstResponder isKindOfClass:[DTCommandFieldEditor class]]) {
 		// We may be editing.  Make sure the field editor reflects the change too.
 		NSTextStorage* textStorage = [firstResponder textStorage];
-		[textStorage replaceCharactersInRange:NSMakeRange(0, [textStorage length]) 
+		[textStorage replaceCharactersInRange:NSMakeRange(0, textStorage.length) 
 								   withString:(newCommand ? newCommand : @"")];
 	}
 }
@@ -117,33 +117,33 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 	self.selectedURLs = selection;
 		
 	// Hide window
-	NSWindow* window = [self window];
-	[window setAlphaValue:0.0];
+	NSWindow* window = self.window;
+	window.alphaValue = 0.0;
 	
 	// Resize text view
 	[resultsTextView minSize];
 	// Select all of the command field
-	[commandFieldEditor setSelectedRange:NSMakeRange(0, [[commandFieldEditor string] length])];
+	[commandFieldEditor setSelectedRange:NSMakeRange(0, commandFieldEditor.string.length)];
 	[window makeFirstResponder:commandField];
 	
 	// If no parent window; use main screen
 	if(NSEqualRects(frame, NSZeroRect)) {
 		NSScreen* mainScreen = [NSScreen mainScreen];
-		frame = [mainScreen visibleFrame];
+		frame = mainScreen.visibleFrame;
 	}
 	
 	// Set frame according to parent window location
 	CGFloat desiredWidth = fmin(frame.size.width - 20.0, 640.0);
 	NSRect newFrame = NSInsetRect(frame, (frame.size.width - desiredWidth) / 2.0, 0.0);
-	newFrame.size.height = [window frame].size.height + [resultsTextView desiredHeightChange];
+	newFrame.size.height = window.frame.size.height + [resultsTextView desiredHeightChange];
 	newFrame.origin.y = frame.origin.y + frame.size.height - newFrame.size.height;
 	[window setFrame:newFrame display:YES];
 	
 	[window makeKeyAndOrderFront:self];
 	
 	[NSAnimationContext beginGrouping];
-	[[NSAnimationContext currentContext] setDuration:0.1f];
-	[[window animator] setAlphaValue:1.0];
+	[NSAnimationContext currentContext].duration = 0.1f;
+	[window animator].alphaValue = 1.0;
 	[NSAnimationContext endGrouping];
 }
 
@@ -152,12 +152,12 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 	if(numRunsToKeep > 100)
 		numRunsToKeep = 100;
 	
-	if([runs count] > numRunsToKeep) {
+	if(runs.count > numRunsToKeep) {
 		// Delete non-running runs until we're below the threshold or are out of runs
 		NSMutableArray* newRuns = [self.runs mutableCopy];
 		
 		unsigned i=0;
-		while(([newRuns count] > numRunsToKeep) && (i < [newRuns count])) {
+		while((newRuns.count > numRunsToKeep) && (i < newRuns.count)) {
 			DTRunManager* run = newRuns[i];
 			if(run.task)
 				i++;
@@ -170,30 +170,30 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 	
 	
 	[NSAnimationContext beginGrouping];
-	[[NSAnimationContext currentContext] setDuration:0.1f];
-	[[[self window] animator] setAlphaValue:0.0];
+	[NSAnimationContext currentContext].duration = 0.1f;
+	[self.window animator].alphaValue = 0.0;
 	[NSAnimationContext endGrouping];
 	
-	[[self window] performSelector:NSSelectorFromString(@"orderOut:")
+	[self.window performSelector:NSSelectorFromString(@"orderOut:")
 						withObject:self
 						afterDelay:0.11f];
 }
 
 - (void)windowDidResignKey:(NSNotification*)notification {
-	if([notification object] != [self window])
+	if(notification.object != self.window)
 		return;
 	
 	[self deactivate];
 }
 
 - (IBAction)insertSelection:(id) __unused sender {
-	NSMutableArray* paths = [NSMutableArray arrayWithCapacity:[selectedURLs count]];
+	NSMutableArray* paths = [NSMutableArray arrayWithCapacity:selectedURLs.count];
 	for(NSString* urlString in self.selectedURLs) {
 		NSURL* url = [NSURL URLWithString:urlString];
-		if([url isFileURL]) {
-			NSString* newPath = [url path];
+		if(url.fileURL) {
+			NSString* newPath = url.path;
 			if([newPath hasPrefix:workingDirectory]) {
-				newPath = [newPath substringFromIndex:[workingDirectory length]];
+				newPath = [newPath substringFromIndex:workingDirectory.length];
 				if([newPath hasPrefix:@"/"])
 					newPath = [newPath substringFromIndex:1];
 			}
@@ -204,11 +204,11 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 	[commandFieldEditor insertFiles:paths];
 }
 - (IBAction)insertSelectionFullPaths:(id) __unused sender {
-	NSMutableArray* paths = [NSMutableArray arrayWithCapacity:[selectedURLs count]];
+	NSMutableArray* paths = [NSMutableArray arrayWithCapacity:selectedURLs.count];
 	for(NSString* urlString in self.selectedURLs) {
 		NSURL* url = [NSURL URLWithString:urlString];
-		if([url isFileURL]) {
-			NSString* newPath = [url path];
+		if(url.fileURL) {
+			NSString* newPath = url.path;
 			[paths addObject:[escapedPath(newPath) mutableCopy]];
 		}
 	}
@@ -216,22 +216,22 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 	[commandFieldEditor insertFiles:paths];
 }
 - (IBAction)pullCommandFromResults:(id) __unused sender {
-	id selection = [runsController selection];
+	id selection = runsController.selection;
 	NSString* resultsCommand = [selection valueForKey:@"command"];
 	if(resultsCommand) {
 		// At this point, self.command is still the last executed command (?!), so we have to use
 		// the length of [commandFieldEditor string] to reflect anything the user's typed since then
 		// https://decimus.fogbugz.com/default.asp?11185
-		[commandFieldEditor setSelectedRange:NSMakeRange(0, [[commandFieldEditor string] length])];
+		[commandFieldEditor setSelectedRange:NSMakeRange(0, commandFieldEditor.string.length)];
 		[commandFieldEditor insertText:resultsCommand];
 	}
 }
 - (IBAction)executeCommand:(id) __unused sender {
 	// Commit editing first
-	if(![[self window] makeFirstResponder:[self window]])
+	if(![self.window makeFirstResponder:self.window])
 		return;
 	
-	if(!self.command || ![self.command length])
+	if(!self.command || !(self.command).length)
 		return;
 	
     DTRunManager* runManager = [[DTRunManager alloc] initWithWD:self.workingDirectory
@@ -242,7 +242,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 
 - (IBAction)executeCommandInTerminal:(id) __unused sender {
 	// Commit editing first
-	if(![[self window] makeFirstResponder:[self window]])
+	if(![self.window makeFirstResponder:self.window])
 		return;
 	
 	NSString* cdCommandString = [NSString stringWithFormat:@"cd %@", escapedPath(self.workingDirectory)];
@@ -305,7 +305,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 		TerminalApplication* terminal = (TerminalApplication *)[SBApplication applicationWithBundleIdentifier:@"com.apple.Terminal"];
 		BOOL terminalAlreadyRunning = [terminal isRunning];
 		
-		TerminalWindow* frontWindow = [[terminal windows] firstObject];
+		TerminalWindow* frontWindow = [terminal windows].firstObject;
 		if(![frontWindow exists])
 			frontWindow = nil;
 		else
@@ -314,7 +314,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 		TerminalTab* tab = nil;
 		if(frontWindow) {
 			if(!terminalAlreadyRunning) {
-				tab = [[frontWindow tabs] firstObject];
+				tab = [frontWindow tabs].firstObject;
 			} else if(/*terminalUsesTabs*/false) {
 				tab = [[[terminal classForScriptingClass:@"tab"] alloc] init];
 				[[frontWindow tabs] addObject:tab];
@@ -340,34 +340,34 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 //	[[NSSound soundNamed:@"Blow"] play];
 	//	NSLog(@"Asked to copy results to clipboard");
 	
-	id selection = [runsController selection];
+	id selection = runsController.selection;
 	NSTextStorage* resultsStorage = [selection valueForKey:@"resultsStorage"];
 	if(!resultsStorage)
 		return;
 	
 	NSPasteboard* pb = [NSPasteboard generalPasteboard];
 	[pb declareTypes:@[NSStringPboardType] owner:self];
-	[pb setString:[resultsStorage string] forType:NSStringPboardType];
+	[pb setString:resultsStorage.string forType:NSStringPboardType];
 	
 	[self deactivate];
 }
 
 - (IBAction)cancelCurrentCommand:(id)sender {
-	NSArray* selection = [runsController selectedObjects];
+	NSArray* selection = runsController.selectedObjects;
 	[selection makeObjectsPerformSelector:NSSelectorFromString(@"cancel:") withObject:sender];
 }
 
 - (void)requestWindowHeightChange:(CGFloat)dHeight {
-	NSWindow* window = [self window];
+	NSWindow* window = self.window;
 	
 	// Calculate new frame, ignoring window constraint
-	NSRect windowFrame = [window frame];
+	NSRect windowFrame = window.frame;
 	windowFrame.size.height += dHeight;
 	windowFrame.origin.y -= dHeight;
 	
 	// Adjust bottom edge so it's on the screen
-	NSScreen* screen = [window screen];
-	NSRect screenRect = [screen visibleFrame];
+	NSScreen* screen = window.screen;
+	NSRect screenRect = screen.visibleFrame;
 	dHeight = windowFrame.origin.y - screenRect.origin.y;
 	if(dHeight < 0.0) {
 		windowFrame.size.height += dHeight;
@@ -388,18 +388,18 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 	BOOL allowFiles = (!isCommand || [partialWord hasPrefix:@"/"] || [partialWord hasPrefix:@"./"] || [partialWord hasPrefix:@"../"]);
 	
 	NSTask* task = [[NSTask alloc] init];
-	[task setCurrentDirectoryPath:self.workingDirectory];
-	[task setLaunchPath:@"/bin/bash"];
-	[task setArguments:[DTRunManager argumentsToRunCommand:[NSString stringWithFormat:@"compgen -%@%@%@ %@",
-															([[[DTRunManager shellPath] lastPathComponent] isEqualToString:@"bash"] ? @"a" : @""),
+	task.currentDirectoryPath = self.workingDirectory;
+	task.launchPath = @"/bin/bash";
+	task.arguments = [DTRunManager argumentsToRunCommand:[NSString stringWithFormat:@"compgen -%@%@%@ %@",
+															([[DTRunManager shellPath].lastPathComponent isEqualToString:@"bash"] ? @"a" : @""),
 															(isCommand ? @"bc" : @""),
 															(allowFiles ? @"df" : @""),
-															partialWord]]];
+															partialWord]];
 	
 	// Attach pipe to task's standard output
 	NSPipe* newPipe = [NSPipe pipe];
-	NSFileHandle* stdOut = [newPipe fileHandleForReading];
-	[task setStandardOutput:newPipe];
+	NSFileHandle* stdOut = newPipe.fileHandleForReading;
+	task.standardOutput = newPipe;
 	
 	// Setting the accessibility flag gives us a sticky egid of 'accessibility', which seems to interfere with shells using .bashrc and whatnot.
 	// We temporarily set our gid back before launching to work around this problem.
@@ -422,7 +422,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 	NSMutableSet* completionsSet = [NSMutableSet setWithArray:[results componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]]];
 	[completionsSet removeObject:@""];
 	
-	NSMutableArray* completions = [NSMutableArray arrayWithCapacity:[completionsSet count]];
+	NSMutableArray* completions = [NSMutableArray arrayWithCapacity:completionsSet.count];
 	NSFileManager* fileManager = [NSFileManager defaultManager];
 	for(__strong NSString* completion in completionsSet) {
 		NSString* actualPath = ([completion hasPrefix:@"/"] ? completion : [workingDirectory stringByAppendingPathComponent:completion]);
@@ -433,7 +433,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 		[completions addObject:completion];
 	}
 	
-	if(![completions count])
+	if(!completions.count)
 		return nil;
 	
 	[completions sortUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"length" ascending:YES],
@@ -465,7 +465,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 			[run setDisplayColor:newColor];
 	}
 	
-	[[[self window] contentView] setNeedsDisplay:YES];
+	[self.window.contentView setNeedsDisplay:YES];
 }
 
 - (CGFloat)resultsCommandFontSize {
@@ -484,7 +484,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
         strongSelf.window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
         strongSelf->commandField.focusRingType = NSFocusRingTypeNone;
         // HACK: textfield doesn't handle highlighting text properly when in "VibrantLight" mode (no hightlight is visible)
-        // TODO: check if the workaround is still necessary on 10.11 release
+        //         last checked on 10.11.1
         strongSelf->commandField.appearance = nil; // counteract hack (a few lines down)
     } immediately:YES];
 
@@ -494,7 +494,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
         strongSelf.window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
         strongSelf->commandField.focusRingType = NSFocusRingTypeDefault;
         // HACK: textfield doesn't handle highlighting text properly when in "VibrantLight" mode (no hightlight is visible)
-        // TODO: check if the workaround is still necessary on 10.11 release
+        //         last checked on 10.11.1
         strongSelf->commandField.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
     } immediately:YES];
 }
