@@ -529,9 +529,11 @@ failedAXDocument:	;
 done:
 	// If there's no explicit WD, but we have a front window URL, try to deduce a working directory from that
 	if(!workingDirectory && [frontWindowURL isFileURL]) {
-		LSItemInfoRecord outItemInfo;
-		if((noErr == LSCopyItemInfoForURL((__bridge CFURLRef)frontWindowURL, kLSRequestAllFlags, &outItemInfo)) &&
-		   ((outItemInfo.flags & kLSItemInfoIsPackage) || !(outItemInfo.flags & kLSItemInfoIsContainer))) {
+        NSError *error = nil;
+        NSDictionary *itemInfo = [frontWindowURL resourceValuesForKeys:@[NSURLIsPackageKey, NSURLIsDirectoryKey] error:&error];
+        BOOL isPackage   = [itemInfo[NSURLIsPackageKey] boolValue];     // was: kLSItemInfoIsPackage;
+        BOOL isContainer = [itemInfo[NSURLIsDirectoryKey] boolValue ];  // was: kLSItemInfoIsContainer
+		if(!error && (isPackage || !isContainer)) {
 			// It's a package or not a container (i.e. a file); use its parent as the WD
 			workingDirectory = frontWindowURL.path.stringByDeletingLastPathComponent;
 		} else {
