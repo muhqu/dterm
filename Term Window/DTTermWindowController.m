@@ -216,15 +216,16 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 	[commandFieldEditor insertFiles:paths];
 }
 - (IBAction)pullCommandFromResults:(id) __unused sender {
-	id selection = runsController.selection;
-	NSString* resultsCommand = [selection valueForKey:@"command"];
-	if(resultsCommand) {
-		// At this point, self.command is still the last executed command (?!), so we have to use
-		// the length of [commandFieldEditor string] to reflect anything the user's typed since then
-		// https://decimus.fogbugz.com/default.asp?11185
-		[commandFieldEditor setSelectedRange:NSMakeRange(0, commandFieldEditor.string.length)];
-		[commandFieldEditor insertText:resultsCommand];
-	}
+	NSString* resultsCommand = [runsController.selection valueForKey:@"command"];
+    
+    if (!resultsCommand)
+        return;
+    
+    // At this point, self.command is still the last executed command (?!), so we have to use
+    // the length of [commandFieldEditor string] to reflect anything the user's typed since then
+    // https://decimus.fogbugz.com/default.asp?11185
+    [commandFieldEditor insertText:resultsCommand
+                  replacementRange:NSMakeRange(0, commandFieldEditor.string.length)];
 }
 - (IBAction)executeCommand:(id) __unused sender {
 	// Commit editing first

@@ -108,11 +108,7 @@
 		// The user can trigger completion again if they want the different options.
 		if(prefix.length && ![prefix isEqualToString:partialWord]) {
 			//NSLog(@"found common prefix: %@", prefix);
-			
-			NSRange replacementRange = self.rangeForUserCompletion;
-			
-			[self setSelectedRange:replacementRange];
-			[self insertText:prefix];
+			[self insertText:prefix replacementRange:self.rangeForUserCompletion];
 			
 			return nil;
 		}
@@ -130,7 +126,7 @@
 
 - (void)insertFiles:(NSArray*)selectedPaths {
 	NSString* insertString = [selectedPaths componentsJoinedByString:@" "];
-	[self insertText:insertString];
+	[self insertText:insertString replacementRange:self.selectedRange];
 }
 
 // We don't want this to eat our font changes
