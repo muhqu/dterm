@@ -83,10 +83,9 @@
     
     //mojo to get the right frame for the new window.
     NSRect newFrame = prefsWindow.frame;
-    newFrame.size.height = prefsView.frame.size.height + 
-	(prefsWindow.frame.size.height - prefsWindow.contentView.frame.size.height);
-    newFrame.size.width = prefsView.frame.size.width;
-    newFrame.origin.y += (prefsWindow.contentView.frame.size.height - prefsView.frame.size.height);
+    newFrame.size.height = CGRectGetHeight(prefsView.frame) + (CGRectGetHeight(prefsWindow.frame) - CGRectGetHeight(prefsWindow.contentView.frame));
+    newFrame.size.width = CGRectGetWidth(prefsView.frame);
+    newFrame.origin.y += (CGRectGetHeight(prefsWindow.contentView.frame) - CGRectGetHeight(prefsView.frame));
     
     //set the frame to newFrame and animate it. (change animate:YES to animate:NO if you don't want this)
 //    [prefsWindow setShowsResizeIndicator:YES];
@@ -94,7 +93,7 @@
     //set the main content view to the new view
     prefsWindow.contentView = prefsView;
 	
-	if (!prefsWindow.visible) {
+	if (![prefsWindow isVisible]) {
 		[self.window center];
 		[self.window makeKeyAndOrderFront:self];
 	}

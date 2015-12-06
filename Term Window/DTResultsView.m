@@ -31,12 +31,12 @@
 																xRadius:5.0 yRadius:5.0];
 	[outlinePath stroke];
 	
-	NSPoint startPoint = NSMakePoint(0.0, self.bounds.size.height - 18.0);
+	NSPoint startPoint = NSMakePoint(0.0, CGRectGetHeight(self.bounds) - 18.0);
     startPoint = [self convertPointToBacking:startPoint];
 	startPoint.y = floor(startPoint.y) + 0.5;
     startPoint = [self convertPointFromBacking:startPoint];
 	
-	NSPoint endPoint = NSMakePoint(self.bounds.size.width, startPoint.y);
+	NSPoint endPoint = NSMakePoint(CGRectGetWidth(self.bounds), startPoint.y);
 	
 	[NSBezierPath strokeLineFromPoint:startPoint
 							  toPoint:endPoint];

@@ -133,10 +133,10 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 	}
 	
 	// Set frame according to parent window location
-	CGFloat desiredWidth = fmin(frame.size.width - 20.0, 640.0);
-	NSRect newFrame = NSInsetRect(frame, (frame.size.width - desiredWidth) / 2.0, 0.0);
-	newFrame.size.height = window.frame.size.height + [resultsTextView desiredHeightChange];
-	newFrame.origin.y = frame.origin.y + frame.size.height - newFrame.size.height;
+	CGFloat desiredWidth = fmin(CGRectGetWidth(frame) - 20.0, 640.0);
+	NSRect newFrame = NSInsetRect(frame, (CGRectGetWidth(frame) - desiredWidth) / 2.0, 0.0);
+	newFrame.size.height = CGRectGetHeight(window.frame) + [resultsTextView desiredHeightChange];
+	newFrame.origin.y = CGRectGetMinY(frame) + CGRectGetHeight(frame) - CGRectGetHeight(newFrame);
 	[window setFrame:newFrame display:YES];
 	
 	[window makeKeyAndOrderFront:self];

@@ -518,8 +518,8 @@ failedAXDocument:	;
 	
 	// Numbers returned by AS are funky; adjust to NSWindow coordinates
 	if(!NSEqualRects(frontWindowBounds, NSZeroRect)) {
-		CGFloat screenHeight = [[[NSScreen screens] firstObject] frame].size.height;
-		frontWindowBounds.origin.y = screenHeight - frontWindowBounds.origin.y - frontWindowBounds.size.height;	
+		CGFloat screenHeight = CGRectGetHeight([[NSScreen screens].firstObject frame]);
+		frontWindowBounds.origin.y = screenHeight - CGRectGetMinY(frontWindowBounds) - CGRectGetHeight(frontWindowBounds);
 	}
 	
 //	NSLog(@"Front window URL: %@", frontWindowURL);
