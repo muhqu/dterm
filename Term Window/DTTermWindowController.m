@@ -18,6 +18,12 @@
 
 static void * DTPreferencesContext = &DTPreferencesContext;
 
+@interface DTTermWindowController ()
+
+@property BOOL didCallDeactivate;
+
+@end
+
 @implementation DTTermWindowController
 
 @synthesize workingDirectory, selectedURLs, command, runs, runsController;
@@ -139,51 +145,88 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 	newFrame.origin.y = CGRectGetMinY(frame) + CGRectGetHeight(frame) - CGRectGetHeight(newFrame);
 	[window setFrame:newFrame display:YES];
 	
-	[window makeKeyAndOrderFront:self];
-	
-	[NSAnimationContext beginGrouping];
-	[NSAnimationContext currentContext].duration = 0.1f;
-	[window animator].alphaValue = 1.0;
-	[NSAnimationContext endGrouping];
+    [self showWindow];
+    
+    self.didCallDeactivate = NO;
 }
 
 - (void)deactivate {
-	NSUInteger numRunsToKeep = (NSUInteger)[[NSUserDefaults standardUserDefaults] integerForKey:DTResultsToKeepKey];
-	if(numRunsToKeep > 100)
-		numRunsToKeep = 100;
+    self.didCallDeactivate = YES;
+    
+    [self cleanUpOldRuns];
 	
-	if(runs.count > numRunsToKeep) {
-		// Delete non-running runs until we're below the threshold or are out of runs
-		NSMutableArray* newRuns = [self.runs mutableCopy];
-		
-		unsigned i=0;
-		while((newRuns.count > numRunsToKeep) && (i < newRuns.count)) {
-			DTRunManager* run = newRuns[i];
-			if(run.task)
-				i++;
-			else
-				[newRuns removeObjectAtIndex:i];								 
-		}
-		
-		self.runs = newRuns;
-	}
-	
-	
-	[NSAnimationContext beginGrouping];
-	[NSAnimationContext currentContext].duration = 0.1f;
-	[self.window animator].alphaValue = 0.0;
-	[NSAnimationContext endGrouping];
-	
-	[self.window performSelector:NSSelectorFromString(@"orderOut:")
-						withObject:self
-						afterDelay:0.11f];
+    [self hideWindow];
 }
 
 - (void)windowDidResignKey:(NSNotification*)notification {
 	if(notification.object != self.window)
 		return;
 	
-	[self deactivate];
+    // if the user made us resign the key window status (e.g. by clicking outside the window), we want to deactivate
+    // but if we get this notification because of us deactivating the window (e.g. after hitting ESC), don't call `-deactivate` again
+    //
+    if (!self.didCallDeactivate) {
+        [self deactivate];
+    }
+}
+
+- (NSTimeInterval) animationDuration
+{
+    BOOL animated = YES; // TODO: add user default for animation (and duration?)
+    return animated ? 0.1 : 0.;
+}
+
+- (void) showWindow
+{
+    NSTimeInterval duration = [self animationDuration];
+    
+    [self.window makeKeyAndOrderFront:self];
+    
+    {
+        [NSAnimationContext beginGrouping];
+        [NSAnimationContext currentContext].duration = duration;
+        [self.window animator].alphaValue = 1.0;
+        [NSAnimationContext endGrouping];
+    }
+}
+
+- (void) hideWindow
+{
+    NSTimeInterval duration = [self animationDuration];
+    
+    {
+        [NSAnimationContext beginGrouping];
+        [NSAnimationContext currentContext].duration = duration;
+        [self.window animator].alphaValue = 0.0;
+        [NSAnimationContext endGrouping];
+    }
+    
+    [self.window performSelector:NSSelectorFromString(@"orderOut:")
+                      withObject:self
+                      afterDelay:duration + 0.01f];
+}
+
+- (void) cleanUpOldRuns
+{
+    NSUInteger numRunsToKeep = (NSUInteger)[[NSUserDefaults standardUserDefaults] integerForKey:DTResultsToKeepKey];
+    if(numRunsToKeep > 100)
+        numRunsToKeep = 100;
+    
+    if(runs.count > numRunsToKeep) {
+        // Delete non-running runs until we're below the threshold or are out of runs
+        NSMutableArray* newRuns = [self.runs mutableCopy];
+        
+        unsigned i=0;
+        while((newRuns.count > numRunsToKeep) && (i < newRuns.count)) {
+            DTRunManager* run = newRuns[i];
+            if(run.task)
+                i++;
+            else
+                [newRuns removeObjectAtIndex:i];								 
+        }
+        
+        self.runs = newRuns;
+    }
 }
 
 - (IBAction)insertSelection:(id) __unused sender {
