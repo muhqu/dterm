@@ -485,7 +485,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
         strongSelf.window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
         strongSelf->commandField.focusRingType = NSFocusRingTypeNone;
         // HACK: textfield doesn't handle highlighting text properly when in "VibrantLight" mode (no hightlight is visible)
-        //         last checked on 10.11.1
+        //         last checked on 10.11.2
         strongSelf->commandField.appearance = nil; // counteract hack (a few lines down)
     } immediately:YES];
 
@@ -495,7 +495,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
         strongSelf.window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
         strongSelf->commandField.focusRingType = NSFocusRingTypeDefault;
         // HACK: textfield doesn't handle highlighting text properly when in "VibrantLight" mode (no hightlight is visible)
-        //         last checked on 10.11.1
+        //         last checked on 10.11.2
         strongSelf->commandField.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
     } immediately:YES];
 }
