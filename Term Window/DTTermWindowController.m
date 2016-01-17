@@ -529,7 +529,8 @@ static void * DTPreferencesContext = &DTPreferencesContext;
         strongSelf->commandField.focusRingType = NSFocusRingTypeNone;
         // HACK: textfield doesn't handle highlighting text properly when in "VibrantLight" mode (no hightlight is visible)
         //         last checked on 10.11.2
-        strongSelf->commandField.appearance = nil; // counteract hack (a few lines down)
+//        strongSelf->commandField.appearance = nil; // counteract hack (a few lines down)
+//        [strongSelf->commandField.cell setValue:@(NSTextFieldRoundedBezel) forKeyPath:@"bezelStyle"];
     } immediately:YES];
 
     // light
@@ -539,7 +540,13 @@ static void * DTPreferencesContext = &DTPreferencesContext;
         strongSelf->commandField.focusRingType = NSFocusRingTypeDefault;
         // HACK: textfield doesn't handle highlighting text properly when in "VibrantLight" mode (no hightlight is visible)
         //         last checked on 10.11.2
-        strongSelf->commandField.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
+//        strongSelf->commandField.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
+//        NSLog(@"bordered: %@", strongSelf->commandField.cell.bordered ? @"YES" : @"NO");
+//        NSLog(@"bezeled: %@", strongSelf->commandField.cell.bezeled ? @"YES" : @"NO");
+//        NSLog(@"style: %@", [strongSelf->commandField.cell valueForKeyPath:@"bezelStyle"]);
+//        [strongSelf->commandField.cell setValue:@(NSTextFieldSquareBezel) forKeyPath:@"bezelStyle"];
+        // setting the command fields appearance to Aqua ... or even just changing the bezelStyle will introduce UI glitches when the terminal output "grows" while the window isn't visible ... if you then reactivate the (now taller) window, the new window part will be missing the expected blur, and will instead be completely transparent
+        
     } immediately:YES];
 }
 
