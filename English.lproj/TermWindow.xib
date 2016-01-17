@@ -158,7 +158,11 @@ DQ
                 </connections>
             </view>
             <connections>
-                <binding destination="-2" name="title" keyPath="workingDirectory" id="241"/>
+                <binding destination="-2" name="title" keyPath="workingDirectory" id="11w-aW-iN7">
+                    <dictionary key="options">
+                        <string key="NSValueTransformerName">DTWindowTitleStringTransformer</string>
+                    </dictionary>
+                </binding>
                 <outlet property="delegate" destination="-2" id="32"/>
                 <outlet property="initialFirstResponder" destination="36" id="38"/>
             </connections>

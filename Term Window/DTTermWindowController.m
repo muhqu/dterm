@@ -18,6 +18,13 @@
 
 static void * DTPreferencesContext = &DTPreferencesContext;
 
+@interface DTWindowTitleStringTransformer : NSValueTransformer
+@end
+@implementation DTWindowTitleStringTransformer
++ (Class) transformedValueClass { return [NSString class]; }
+- (id) transformedValue: (id) inValue { return [inValue stringByAbbreviatingWithTildeInPath] ?: @""; }
+@end
+
 @interface DTTermWindowController ()
 
 @property BOOL didCallDeactivate;
