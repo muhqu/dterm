@@ -15,7 +15,6 @@
 
 - (void)awakeFromNib {
 	[self.layoutManager replaceTextStorage:[[NSTextStorage alloc] init]];
-//    NSLog(@"screen fonts: %@", self.layoutManager.usesScreenFonts ? @"YES" : @"NO");
 	
 	[self bind:@"disableAntialiasing"
 	  toObject:[NSUserDefaultsController sharedUserDefaultsController]
@@ -29,8 +28,6 @@
 }
 
 extern void CGContextSetFontSmoothingStyle(CGContextRef, int);
-extern int CGContextGetFontSmoothingStyle(CGContextRef);
-
 - (void)drawRect:(NSRect)aRect {
     NSGraphicsContext *currentContext = [NSGraphicsContext currentContext];
 
@@ -39,21 +36,12 @@ extern int CGContextGetFontSmoothingStyle(CGContextRef);
         BOOL useThinStrokes = YES;
         if(disableAntialiasing) {
             [currentContext setShouldAntialias:NO];
-//            CGContextSetShouldAntialias
         } else if (useThinStrokes) {
             // iterm2 / iTermTextDrawingHelper.m
             // This seems to be available at least on 10.8 and later. The only reference to it is in
             // WebKit. This causes text to render just a little lighter, which looks nicer.
-            // savedFontSmoothingStyle = CGContextGetFontSmoothingStyle(ctx);
             CGContextSetFontSmoothingStyle([currentContext CGContext], 16);
         }
-        
-        // This disables font smoothing. This is necessary because in this implementation, the NSTextView is always drawn with a transparent background
-        // and layered on top of other views. It therefore cannot properly do subpixel rendering and the smoothing ends up looking like crap. Turning
-        // the smoothing off is not as nice as properly smoothed text, of course, but at least its sorta readable. Yet another case of crap layer
-        // support making things difficult. Amazingly, iOS fonts look fine when rendered without subpixel smoothing. Why?!
-        // https://github.com/BigZaphod/Chameleon/blob/master/UIKit/Classes/UICustomNSTextView.m#L357
-        // CGContextSetShouldSmoothFonts(ctx, YES);
 
         [super drawRect:aRect];
     }
