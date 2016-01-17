@@ -274,6 +274,25 @@ DQ
                         </binding>
                     </connections>
                 </textField>
+                <textField verticalHuggingPriority="750" id="gUD-EF-ERh" customClass="DTAntialiasControllableTextField">
+                    <rect key="frame" x="45" y="150" width="243" height="14"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="right" title="&lt;no localize&gt;" placeholderString="wd" bezelStyle="round" id="ghh-qn-kOB">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" red="0.62806773559999995" green="0.62806773559999995" blue="0.62806773559999995" alpha="0.90167885640000001" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.62806773559999995" green="0.62806773559999995" blue="0.62806773559999995" alpha="0.90167885640000001" colorSpace="calibratedRGB"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="fontSize" keyPath="resultsCommandFontSize" previousBinding="l0A-1V-fmm" id="dFd-yc-Fvc"/>
+                        <binding destination="140" name="value" keyPath="selection.workingDirectory" id="82Y-hD-jX5">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">DTWindowTitleStringTransformer</string>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="hidden" keyPath="shouldHideWDForSelectedRun" id="0sr-o0-0Gg"/>
+                        <binding destination="220" name="fontName" keyPath="values.DTFontName" id="l0A-1V-fmm"/>
+                    </connections>
+                </textField>
                 <button toolTip="Show previous result (⌘⌥←)" verticalHuggingPriority="750" id="124">
                     <rect key="frame" x="4" y="148" width="19" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>

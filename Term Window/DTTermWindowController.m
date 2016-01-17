@@ -17,6 +17,7 @@
 #import "WAYTheDarkSide.h"
 
 static void * DTPreferencesContext = &DTPreferencesContext;
+static void * DTResultsStorageContext = &DTResultsStorageContext;
 
 @interface DTWindowTitleStringTransformer : NSValueTransformer
 @end
@@ -28,6 +29,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 @interface DTTermWindowController ()
 
 @property BOOL didCallDeactivate;
+@property BOOL shouldHideWDForSelectedRun;
 
 @end
 
@@ -59,6 +61,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
     {
         [sdc removeObserver:self forKeyPath:defaultKeyPath context:DTPreferencesContext];
     }
+    [resultsTextView removeObserver:self forKeyPath:@"resultsStorage" context:DTResultsStorageContext];
 }
 
 - (NSArray *)observedDefaults
@@ -75,7 +78,8 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 				 toObject:runsController
 			  withKeyPath:@"selection.resultsStorage"
 				  options:nil];
-	
+    [resultsTextView addObserver:self forKeyPath:@"resultsStorage" options:0 context:DTResultsStorageContext];
+    
     // HACK to show "proper" placeholder despite in dark mode  (dark mode placeholder is too dark to actually be visible)
     // ... or switch appearance of this ivar?!
     NSDictionary *attr = [NSDictionary dictionaryWithObject:[NSColor lightGrayColor]
@@ -104,6 +108,8 @@ static void * DTPreferencesContext = &DTPreferencesContext;
         } while(!wasSeparator && actionMenu.numberOfItems);
     }
     
+    self.shouldHideWDForSelectedRun = YES;
+
     [self setUpDarkModeHandling];
 }
 
@@ -139,7 +145,9 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 	// Set the state variables
 	self.workingDirectory = wdPath;
 	self.selectedURLs = selection;
-		
+    
+    [self updateShouldHideWD];
+
 	// Hide window
 	NSWindow* window = self.window;
 	window.alphaValue = 0.0;
@@ -507,30 +515,38 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 	return completions;
 }
 
+- (void) updateShouldHideWD
+{
+    NSString *wd = [(DTRunManager *)runsController.selectedObjects.firstObject workingDirectory];
+
+    self.shouldHideWDForSelectedRun = !wd || [self.workingDirectory isEqualToString:wd];
+}
+
 #pragma mark font/color support
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
 					  ofObject:(id)object
 						change:(NSDictionary *)change
 					   context:(void *)context {
-	if(context != DTPreferencesContext){
-		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-		return;
-	}
-	
-	NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-	if([keyPath isEqualToString:@"values.DTFontName"] || [keyPath isEqualToString:@"values.DTFontSize"]) {
-		NSFont* newFont = [NSFont fontWithName:[defaults objectForKey:DTFontNameKey]
-										  size:[defaults doubleForKey:DTFontSizeKey]];
-		for(DTRunManager* run in runs)
-			[run setDisplayFont:newFont];
-	} else if([keyPath isEqualToString:@"values.DTTextColor"]) {
-		NSColor* newColor = [NSKeyedUnarchiver unarchiveObjectWithData:[defaults objectForKey:DTTextColorKey]];
-		for(DTRunManager* run in runs)
-			[run setDisplayColor:newColor];
-	}
-	
-	[self.window.contentView setNeedsDisplay:YES];
+	if(context == DTPreferencesContext) {
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        if([keyPath isEqualToString:@"values.DTFontName"] || [keyPath isEqualToString:@"values.DTFontSize"]) {
+            NSFont* newFont = [NSFont fontWithName:[defaults objectForKey:DTFontNameKey]
+                                              size:[defaults doubleForKey:DTFontSizeKey]];
+            for(DTRunManager* run in runs)
+                [run setDisplayFont:newFont];
+        } else if([keyPath isEqualToString:@"values.DTTextColor"]) {
+            NSColor* newColor = [NSKeyedUnarchiver unarchiveObjectWithData:[defaults objectForKey:DTTextColorKey]];
+            for(DTRunManager* run in runs)
+                [run setDisplayColor:newColor];
+        }
+        
+        [self.window.contentView setNeedsDisplay:YES];
+    } else if (context == DTResultsStorageContext) {
+        [self updateShouldHideWD];
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 - (CGFloat)resultsCommandFontSize {
