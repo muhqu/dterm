@@ -18,6 +18,7 @@
 	IBOutlet DTResultsView* resultsView;
 	IBOutlet DTResultsTextView* resultsTextView;
 	
+    __weak IBOutlet NSTextField *cmdTextField;
 	IBOutlet NSTextField* commandField;
 	DTCommandFieldEditor* commandFieldEditor;
 }

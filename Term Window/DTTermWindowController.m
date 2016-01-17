@@ -69,7 +69,18 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 			  withKeyPath:@"selection.resultsStorage"
 				  options:nil];
 	
-	// Swap in the results view for its placeholder
+    // HACK to show "proper" placeholder despite in dark mode  (dark mode placeholder is too dark to actually be visible)
+    // ... or switch appearance of this ivar?!
+    NSDictionary *attr = [NSDictionary dictionaryWithObject:[NSColor lightGrayColor]
+                                                     forKey:NSForegroundColorAttributeName];
+    NSAttributedString *placeholder = [[NSAttributedString alloc] initWithString:@"no command run"
+                                                                      attributes:attr];
+    [cmdTextField bind:NSValueBinding
+              toObject:runsController
+           withKeyPath:@"selection.command"
+               options:@{NSNoSelectionPlaceholderBindingOption: placeholder}];
+    
+    // Swap in the results view for its placeholder
 	resultsView.frame = placeholderForResultsView.frame;
 	[placeholderForResultsView removeFromSuperview];
 	[self.window.contentView addSubview:resultsView];

@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="actionButton" destination="257" id="269"/>
                 <outlet property="actionMenu" destination="259" id="264"/>
+                <outlet property="cmdTextField" destination="175" id="RZM-hs-eif"/>
                 <outlet property="commandField" destination="36" id="159"/>
                 <outlet property="placeholderForResultsView" destination="139" id="141"/>
                 <outlet property="resultsTextView" destination="113" id="158"/>
@@ -177,7 +178,6 @@ DQ
                     <accessibility description="command for displayed results"/>
                     <connections>
                         <binding destination="-2" name="fontSize" keyPath="resultsCommandFontSize" previousBinding="222" id="267"/>
-                        <binding destination="140" name="value" keyPath="selection.command" id="177"/>
                         <binding destination="140" name="enabled" keyPath="selection.command" id="187"/>
                         <binding destination="140" name="hidden" keyPath="selection.task" previousBinding="187" id="188">
                             <dictionary key="options">
