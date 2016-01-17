@@ -180,9 +180,12 @@ static void * DTPreferencesContext = &DTPreferencesContext;
 	if(notification.object != self.window)
 		return;
 	
+    // don't deactivate when we have the prefs open ... user might want to see the effect of different styling options (since we do support changing of font, color & aliasing on-the-fly
+    if ([[NSApp valueForKeyPath:@"delegate.prefsWindowController.window.visible"] boolValue])
+        return;
+
     // if the user made us resign the key window status (e.g. by clicking outside the window), we want to deactivate
     // but if we get this notification because of us deactivating the window (e.g. after hitting ESC), don't call `-deactivate` again
-    //
     if (!self.didCallDeactivate) {
         [self deactivate];
     }
