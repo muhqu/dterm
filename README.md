@@ -9,7 +9,7 @@ Command line work isn't a separate task that should live on its own—it's an in
 
 <br break="both">
 
-# Whow does it look like?
+# What does it look like?
 
 ![](Images/DTerm-ScreenShot@2x.png)
 
