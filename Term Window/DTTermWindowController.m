@@ -524,7 +524,7 @@ static void * DTPreferencesContext = &DTPreferencesContext;
     [WAYTheDarkSide welcomeApplicationWithBlock:^{
         typeof(self) strongSelf = weakSelf;
         // HUD style windows (utilizing the NSHUDWindowMask) now automatically utilize NSVisualEffectView to create a blurred background. Applications should set the NSAppearance with the name NSAppearanceNameVibrantDark on the window to get vibrant and dark controls.
-        //  https://developer.apple.com/library/mac/releasenotes/AppKit/RN-AppKit/ -- "AppKit Release Notes for OS X v10.10"
+        //  https://developer.apple.com/library/mac/releasenotes/AppKit/RN-AppKitOlderNotes/#X10_10Notes -- "AppKit Release Notes for OS X v10.10"
         strongSelf.window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
         strongSelf->commandField.focusRingType = NSFocusRingTypeNone;
         // HACK: textfield doesn't handle highlighting text properly when in "VibrantLight" mode (no hightlight is visible)
