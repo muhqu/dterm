@@ -83,6 +83,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A51A12118B9BF55AB0768BAB /* Pods_DTerm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780DDEE708186379F464817B /* Pods_DTerm.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,10 +203,13 @@
 		3B3E1FAF190C10C500B31D3E /* SRRecorderControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRRecorderControl.m; sourceTree = "<group>"; };
 		3B3E1FB0190C10C500B31D3E /* SRValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRValidator.h; sourceTree = "<group>"; };
 		3B3E1FB1190C10C500B31D3E /* SRValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRValidator.m; sourceTree = "<group>"; };
+		381C522928B9812C8BE0EAF0 /* Pods-DTerm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DTerm.release.xcconfig"; path = "Pods/Target Support Files/Pods-DTerm/Pods-DTerm.release.xcconfig"; sourceTree = "<group>"; };
 		3B6316B5190D51E100D62E4E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		3B7E884ED7FBFC7000DF9EBD /* Pods-DTerm.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DTerm.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DTerm/Pods-DTerm.debug.xcconfig"; sourceTree = "<group>"; };
 		3B899C9E1B95FE630083FB9A /* WAYTheDarkSide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WAYTheDarkSide.h; path = "3rd party source/WAYTheDarkSide.h"; sourceTree = "<group>"; };
 		3B899C9F1B95FE630083FB9A /* WAYTheDarkSide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WAYTheDarkSide.m; path = "3rd party source/WAYTheDarkSide.m"; sourceTree = "<group>"; };
 		75B0EC781A022E5900C023D1 /* iTerm2Nightly.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTerm2Nightly.h; sourceTree = "<group>"; };
+		780DDEE708186379F464817B /* Pods_DTerm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DTerm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* DTerm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DTerm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -227,6 +231,7 @@
 				250074550CF0B1C500949B95 /* Carbon.framework in Frameworks */,
 				250075730CF0C24200949B95 /* ScriptingBridge.framework in Frameworks */,
 				25E0070A0DBFCA280092F1E5 /* IOKit.framework in Frameworks */,
+				A51A12118B9BF55AB0768BAB /* Pods_DTerm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +251,15 @@
 				258373430CFE12A000943791 /* DTRunManager.m */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		0CF25D5ADA88517C081215BF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3B7E884ED7FBFC7000DF9EBD /* Pods-DTerm.debug.xcconfig */,
+				381C522928B9812C8BE0EAF0 /* Pods-DTerm.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
@@ -391,6 +405,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				0CF25D5ADA88517C081215BF /* Pods */,
 			);
 			name = DTerm;
 			sourceTree = "<group>";
@@ -432,6 +447,7 @@
 				3B6316B5190D51E100D62E4E /* XCTest.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+				780DDEE708186379F464817B /* Pods_DTerm.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -491,9 +507,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "DTerm" */;
 			buildPhases = (
+				EBDA09E5B548F442D65545B9 /* [CP] Check Pods Manifest.lock */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				EFE972699D52C573120F8C5B /* [CP] Embed Pods Frameworks */,
+				6FE6181D1E8391CF3AAE47EA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -590,6 +609,51 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "PATH=\"$HOME/bin:/usr/local/bin:$PATH\"\ncd \"$PROJECT_DIR\"\nSHA=$(git rev-parse --short HEAD)\nCOUNT=$(git rev-list --count HEAD)\necho \"*** Building Git Revision: $COUNT @ $SHA\"\nmkdir -p \"$TARGET_BUILD_DIR/include\"\necho \"#define REVISION 1.8.$COUNT\" >  $TARGET_BUILD_DIR/include/Revision.h\n\ngit diff --quiet\nif [[ $? -eq 0 ]]; then\n  echo \"#define REVISION_PUBLIC 1.8.$COUNT-$SHA\" >> $TARGET_BUILD_DIR/include/Revision.h\nelse\n  echo \"#define REVISION_PUBLIC 1.8.$COUNT-$SHA+\" >> $TARGET_BUILD_DIR/include/Revision.h\nfi\n";
+		};
+		6FE6181D1E8391CF3AAE47EA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DTerm/Pods-DTerm-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EBDA09E5B548F442D65545B9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		EFE972699D52C573120F8C5B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DTerm/Pods-DTerm-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -784,6 +848,7 @@
 		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3B7E884ED7FBFC7000DF9EBD /* Pods-DTerm.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -839,6 +904,7 @@
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 381C522928B9812C8BE0EAF0 /* Pods-DTerm.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
