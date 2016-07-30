@@ -31,7 +31,6 @@
 		2522A1020CFB540500DF702E /* DTResultsTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2522A1010CFB540500DF702E /* DTResultsTextView.m */; };
 		2525DE5F0D234AE0009A5592 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 2525DE5E0D234AE0009A5592 /* Growl Registration Ticket.growlRegDict */; };
 		2529F6BC0CF4CD0700CDF456 /* DTBlackRedStatusTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2529F6BB0CF4CD0700CDF456 /* DTBlackRedStatusTransformer.m */; };
-		2529F76E0CF4D61100CDF456 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2529F76D0CF4D61100CDF456 /* Security.framework */; };
 		2529F8510CF5F6AB00CDF456 /* DTerm.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2529F8500CF5F6AB00CDF456 /* DTerm.icns */; };
 		254036C610FFCDCC0076CE83 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 254036C410FFCDCC0076CE83 /* Localizable.strings */; };
 		257158E90CFF9A99007181F4 /* DTShellUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 257158E80CFF9A99007181F4 /* DTShellUtilities.m */; };
@@ -69,7 +68,6 @@
 		25E651570CF3B0B80072997F /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E651550CF3B0B80072997F /* Preferences.xib */; };
 		25E6DA3E0EB2623F003C1E84 /* DSAppleScriptUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E6DA3D0EB2623F003C1E84 /* DSAppleScriptUtilities.m */; };
 		25E6DA3F0EB262AB003C1E84 /* DSAppleScriptUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E6DA3D0EB2623F003C1E84 /* DSAppleScriptUtilities.m */; };
-		25FA401212F069D300DE744A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25FA401112F069D300DE744A /* WebKit.framework */; };
 		3B3E1FB2190C10C500B31D3E /* SRRemoveShortcut.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3B3E1FA4190C10C500B31D3E /* SRRemoveShortcut.tif */; };
 		3B3E1FB3190C10C500B31D3E /* SRRemoveShortcutPressed.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3B3E1FA5190C10C500B31D3E /* SRRemoveShortcutPressed.tif */; };
 		3B3E1FB4190C10C500B31D3E /* SRRemoveShortcutRollover.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3B3E1FA6190C10C500B31D3E /* SRRemoveShortcutRollover.tif */; };
@@ -224,9 +222,7 @@
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				250074550CF0B1C500949B95 /* Carbon.framework in Frameworks */,
 				250075730CF0C24200949B95 /* ScriptingBridge.framework in Frameworks */,
-				2529F76E0CF4D61100CDF456 /* Security.framework in Frameworks */,
 				25E0070A0DBFCA280092F1E5 /* IOKit.framework in Frameworks */,
-				25FA401212F069D300DE744A /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
