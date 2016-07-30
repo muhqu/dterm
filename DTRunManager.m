@@ -54,9 +54,9 @@
 	if((self = [super init])) {
 		resultsStorage = [[NSTextStorage alloc] init];
 		currentAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-							 [NSFont fontWithName:[[NSUserDefaults standardUserDefaults] objectForKey:DTFontNameKey]
+							 (NSFont* _Nonnull)[NSFont fontWithName:(NSString* _Nonnull)[[NSUserDefaults standardUserDefaults] objectForKey:DTFontNameKey]
 											 size:[[NSUserDefaults standardUserDefaults] doubleForKey:DTFontSizeKey]], NSFontAttributeName,
-							 [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:DTTextColorKey]], NSForegroundColorAttributeName,
+							 [NSKeyedUnarchiver unarchiveObjectWithData:(NSData* _Nonnull)[[NSUserDefaults standardUserDefaults] objectForKey:DTTextColorKey]], NSForegroundColorAttributeName,
 							 nil];
 		self.workingDirectory = _wd;
 		self.selectedURLStrings = _selection;
@@ -385,11 +385,11 @@
 						fgColor = nil;
 						bgColor = nil;
 						[currentAttributes removeObjectForKey:NSUnderlineStyleAttributeName];
-						currentAttributes[NSFontAttributeName] = [[NSFontManager sharedFontManager] convertFont:currentAttributes[NSFontAttributeName]
+						currentAttributes[NSFontAttributeName] = [[NSFontManager sharedFontManager] convertFont:(NSFont* _Nonnull)currentAttributes[NSFontAttributeName]
 																					 toNotHaveTrait:NSFontBoldTrait];
 						break;
 					case 1:		// bold
-						currentAttributes[NSFontAttributeName] = [[NSFontManager sharedFontManager] convertFont:currentAttributes[NSFontAttributeName]
+						currentAttributes[NSFontAttributeName] = [[NSFontManager sharedFontManager] convertFont:(NSFont* _Nonnull)currentAttributes[NSFontAttributeName]
 																						toHaveTrait:NSFontBoldTrait];
 						break;
 					case 4:		// underline single
@@ -409,7 +409,7 @@
 						currentAttributes[NSUnderlineStyleAttributeName] = @(NSUnderlineStyleDouble);
 						break;
 					case 22:	// stop bold
-						currentAttributes[NSFontAttributeName] = [[NSFontManager sharedFontManager] convertFont:currentAttributes[NSFontAttributeName]
+						currentAttributes[NSFontAttributeName] = [[NSFontManager sharedFontManager] convertFont:(NSFont* _Nonnull)currentAttributes[NSFontAttributeName]
 																					 toNotHaveTrait:NSFontBoldTrait];
 						break;
 					case 24:	// underline none
@@ -520,7 +520,7 @@
 				}
 			}
 			
-			NSColor* standardFGColor = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:DTTextColorKey]];
+			NSColor* standardFGColor = [NSKeyedUnarchiver unarchiveObjectWithData:(NSData* _Nonnull)[[NSUserDefaults standardUserDefaults] objectForKey:DTTextColorKey]];
 			fgColor = ( fgColor ? [fgColor colorWithAlphaComponent:standardFGColor.alphaComponent] : standardFGColor );
 			bgColor = [bgColor colorWithAlphaComponent:standardFGColor.alphaComponent];
 			

@@ -50,7 +50,7 @@
 - (void)loadAnimationImages {
 	NSMutableArray* tmpImages = [NSMutableArray arrayWithCapacity:12];
 	for(unsigned i=0; i<12; i++) {
-		[tmpImages addObject:[NSImage imageNamed:[NSString stringWithFormat:@"ProgressWhite-%d", i]]];
+		[tmpImages addObject:(NSImage* _Nonnull)[NSImage imageNamed:[NSString stringWithFormat:@"ProgressWhite-%d", i]]];
 	}
 	
 	// Make an immutable copy so this is reasonably fast

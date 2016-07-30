@@ -531,12 +531,12 @@ static void * DTResultsStorageContext = &DTResultsStorageContext;
 	if(context == DTPreferencesContext) {
         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
         if([keyPath isEqualToString:@"values.DTFontName"] || [keyPath isEqualToString:@"values.DTFontSize"]) {
-            NSFont* newFont = [NSFont fontWithName:[defaults objectForKey:DTFontNameKey]
+            NSFont* newFont = [NSFont fontWithName:(NSString* _Nonnull)[defaults objectForKey:DTFontNameKey]
                                               size:[defaults doubleForKey:DTFontSizeKey]];
             for(DTRunManager* run in runs)
                 [run setDisplayFont:newFont];
         } else if([keyPath isEqualToString:@"values.DTTextColor"]) {
-            NSColor* newColor = [NSKeyedUnarchiver unarchiveObjectWithData:[defaults objectForKey:DTTextColorKey]];
+            NSColor* newColor = [NSKeyedUnarchiver unarchiveObjectWithData:(NSData* _Nonnull)[defaults objectForKey:DTTextColorKey]];
             for(DTRunManager* run in runs)
                 [run setDisplayColor:newColor];
         }

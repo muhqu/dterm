@@ -485,7 +485,7 @@ done:
 	
 	// If there's no explicit WD but we have a selection, try to deduce a working directory from that
 	if(!workingDirectory && selectionURLStrings.count) {
-		NSURL* url = [NSURL URLWithString:selectionURLStrings.firstObject];
+        NSURL* url = [NSURL URLWithString:(NSString* _Nonnull)selectionURLStrings.firstObject];
 		NSString* path = url.path;
 		workingDirectory = path.stringByDeletingLastPathComponent;
 	}
