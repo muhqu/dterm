@@ -7,8 +7,8 @@
 //
 
 
-//WARNING_CFLAGS = -Weverything  // doesn't seem to get picked up
-OTHER_CFLAGS = $(inherited) -Weverything -Wno-gnu-conditional-omitted-operand
+//WARNING_CFLAGS = -Weverything  // doesn't seem to get picked up ... but does show up in Xcode Build Settings
+OTHER_CFLAGS = $(inherited) -Weverything -Wno-pedantic
 
 GCC_TREAT_WARNINGS_AS_ERRORS = YES
 
