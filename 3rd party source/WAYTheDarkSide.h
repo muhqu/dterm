@@ -32,7 +32,7 @@
 /** Sets a block which will be performed whenever the system switches from normal to the dark appearance.
  * @param object			An object as a reference. You can overwrite existing blocks by specifying the same block object again.
  * @param eventHandler		The block that will be performed.
- * @param immediately		If YES, the block will be performed immediately, if the system currently already is in the Dark Mode.
+ * @param flag		If YES, the block will be performed immediately, if the system currently already is in the Dark Mode.
  * @discussion				The `object` should be, e.g., your NSWindowController or NSViewController instance.
  */
 + (void) welcomeObject: (id) object withBlock: (void (^)(void)) eventHandler immediately:(BOOL)flag;
@@ -40,20 +40,20 @@
 /** Sets a block which will be performed whenever the system switches back from the dark to the normal appearance.
  * @param object			An object as a reference. You can overwrite existing blocks by specifying the same block object again.
  * @param eventHandler		The block that will be performed.
- * @param immediately		If YES, the block will be performed immediately, if the system currently already is in the normal mode.
+ * @param flag		If YES, the block will be performed immediately, if the system currently already is in the normal mode.
  * @discussion				The `object` should be, e.g., your NSWindowController or NSViewController instance.
  */
 + (void) outcastObject: (id) object withBlock: (void (^)(void)) eventHandler immediately:(BOOL)flag;
 
 /** Convenient method to set a general block that will be executed when the user enables the system-wide Dark Mode. Previously defined block(s) will be abandoned.
  * @param eventHandler		The block that will be performed.
- * @param immediately		If YES, the block will be performed immediately, if the system currently already is in the Dark Mode.
+ * @param flag		If YES, the block will be performed immediately, if the system currently already is in the Dark Mode.
  * @discussion				Use this method if you plan to use only one event handler globally. This will use the NSApplication delegate as referenced object. */
 + (void) welcomeApplicationWithBlock: (void (^)(void)) eventHandler immediately:(BOOL)flag;
 
 /** Convenient method to set a general block that will be executed when the user disables the system-wide Dark Mode. Previously defined block(s) will be abandoned.
  * @param eventHandler		The block that will be performed.
- * @param immediately		If YES, the block will be performed immediately, if the system currently already is in the normal mode.
+ * @param flag		If YES, the block will be performed immediately, if the system currently already is in the normal mode.
  * @discussion				Use this method if you plan to use only one event handler globally. This will use the NSApplication delegate as referenced object. */
 + (void) outcastApplicationWithBlock: (void (^)(void)) eventHandler immediately:(BOOL)flag;
 
