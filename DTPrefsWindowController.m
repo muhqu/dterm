@@ -6,7 +6,8 @@
 #import "DTAppController.h"
 #import "DTPrefsAXController.h"
 #import "FontNameToDisplayNameTransformer.h"
-#import "SRRecorderControl.h"
+
+#import <MASShortcut/Shortcut.h>
 
 @implementation DTPrefsWindowController
 
@@ -35,8 +36,7 @@
 }
 
 - (void)windowDidLoad {
-	[shortcutRecorder setAllowsKeyOnly:NO escapeKeysRecord:NO];
-	shortcutRecorder.keyCombo = [APP_DELEGATE hotKey];
+    shortcutRecorder.associatedUserDefaultsKey = DTGlobalShortcutPreferenceKey;
 }
 
 - (void)windowDidBecomeKey:(NSNotification *) __unused notification {
@@ -50,28 +50,6 @@
 		[self.window center];
 		[self.window makeKeyAndOrderFront:sender];
 	}
-}
-
-- (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder
-			   isKeyCode:(NSInteger)keyCode
-		   andFlagsTaken:(NSUInteger)flags
-				  reason:(NSString * __autoreleasing *)aReason
-{
-    UnusedParameter(aRecorder);
-    UnusedParameter(keyCode);
-    UnusedParameter(flags);
-    UnusedParameter(aReason);
-    
-	return NO;
-}
-
-- (void)shortcutRecorder:(SRRecorderControl *)aRecorder
-	   keyComboDidChange:(KeyCombo)newKeyCombo
-{
-    UnusedParameter(aRecorder);
-    
-//	NSLog(@"New key combo: key code %d, flags %d", newKeyCombo.code, newKeyCombo.flags);
-	[APP_DELEGATE setHotKey:newKeyCombo];
 }
 
 - (void)showView:(NSView*)prefsView {

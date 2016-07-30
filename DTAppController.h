@@ -1,8 +1,6 @@
 //  DTAppController.h
 //  Copyright (c) 2007-2010 Decimus Software, Inc. All rights reserved.
 
-#import "SRCommon.h"
-
 @class DTPrefsWindowController;
 @class DTTermWindowController;
 @class RTFWindowController;
@@ -14,15 +12,14 @@ extern NSString* const DTTextColorKey;
 extern NSString* const DTFontNameKey;
 extern NSString* const DTFontSizeKey;
 
+extern NSString* const DTGlobalShortcutPreferenceKey;
+
 @interface DTAppController : NSObject {
 	IBOutlet SUUpdater* __unsafe_unretained sparkleUpdater;
 	DTTermWindowController* termWindowController;
 	
 	RTFWindowController* acknowledgmentsWindowController;
 	RTFWindowController* licenseWindowController;
-	
-	EventHotKeyRef hotKeyRef;
-	KeyCombo hotKey;
 }
 
 @property (unsafe_unretained) SUUpdater* sparkleUpdater;
@@ -34,11 +31,5 @@ extern NSString* const DTFontSizeKey;
 - (IBAction)showPrefs:(id)sender;
 - (IBAction)showAcknowledgments:(id)sender;
 - (IBAction)showLicense:(id)sender;
-
-@property KeyCombo hotKey;
-- (void)hotkeyPressed;
-
-- (void)saveHotKeyToUserDefaults;
-- (void)loadHotKeyFromUserDefaults;
 
 @end

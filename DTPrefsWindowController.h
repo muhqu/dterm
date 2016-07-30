@@ -2,10 +2,10 @@
 //  Copyright (c) 2007-2010 Decimus Software, Inc. All rights reserved.
 
 @class DTPrefsAXController;
-@class SRRecorderControl;
+@class MASShortcutView;
 
 @interface DTPrefsWindowController : NSWindowController {
-	IBOutlet SRRecorderControl* shortcutRecorder;
+	IBOutlet MASShortcutView* shortcutRecorder;
 	
 	IBOutlet NSView* generalPrefsView;
 	IBOutlet NSView* accessibilityPrefsView;

@@ -10,6 +10,8 @@
 #import "PathFinder.h"
 #import "RTFWindowController.h"
 
+#import <MASShortcut/MASShortcutBinder.h>
+
 NSString* const DTResultsToKeepKey = @"DTResultsToKeep";
 NSString* const DTHotkeyAlsoDeactivatesKey = @"DTHotkeyAlsoDeactivates";
 NSString* const DTShowDockIconKey = @"DTShowDockIcon";
@@ -18,16 +20,8 @@ NSString* const DTFontNameKey = @"DTFontName";
 NSString* const DTFontSizeKey = @"DTFontSize";
 NSString* const DTDisableAntialiasingKey = @"DTDisableAntialiasing";
 
-OSStatus DTHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void *userData);
-OSStatus DTHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void *userData)
-{
-    UnusedParameter(nextHandler);
-    UnusedParameter(theEvent);
-    UnusedParameter(userData);
+NSString* const DTGlobalShortcutPreferenceKey = @"DTGlobalHotKey";
 
-	[APP_DELEGATE hotkeyPressed];
-	return noErr;
-}
 
 // Calling `CFAutorelease()` on NULL objects crashes with a EXC_BREAKPOINT and the message:
 //      *** CFAutorelease() called with NULL ***
@@ -111,15 +105,11 @@ OSStatus DTHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
 - (void)awakeFromNib {
 	termWindowController = [[DTTermWindowController alloc] init];
 	
-	// Install event handler for hotkey events
-	EventTypeSpec theTypeSpec[] =
-	{
-		{ kEventClassKeyboard, kEventHotKeyPressed },
-		//{ kEventClassKeyboard, kEventHotKeyReleased }
-	};
-	InstallApplicationEventHandler(&DTHotKeyHandler, 1, theTypeSpec, NULL, NULL);
-
-	[self loadHotKeyFromUserDefaults];
+    [[MASShortcutBinder sharedBinder] bindShortcutWithDefaultsKey:DTGlobalShortcutPreferenceKey
+                                                         toAction:^{
+                                                             [self hotkeyPressed];
+                                                         }];
+    
 }
 
 - (DTPrefsWindowController *) prefsWindowController {
@@ -127,55 +117,6 @@ OSStatus DTHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
 		self.prefsWindowController = [[DTPrefsWindowController alloc] init];
 
 	return _prefsWindowController;
-}
-
-- (KeyCombo)hotKey {
-	return hotKey;
-}
-
-- (void)setHotKey:(KeyCombo)newHotKey {
-	// Unregister old hotkey, if necessary
-	if(hotKeyRef) {
-		UnregisterEventHotKey(hotKeyRef);
-		hotKeyRef = NULL;
-	}
-	
-	// Save hotkey for the future
-	hotKey = newHotKey;
-	[self saveHotKeyToUserDefaults];
-	
-	// Register new hotkey, if we have one
-	if((hotKey.code != -1) && (hotKey.flags != 0)) {
-		EventHotKeyID hotKeyID = { 'htk1', 1 };
-		RegisterEventHotKey((UInt32)hotKey.code,
-							(UInt32)SRCocoaToCarbonFlags(hotKey.flags),
-							hotKeyID,
-							GetApplicationEventTarget(), 
-							0, 
-							&hotKeyRef);
-	}
-}
-
-- (void)saveHotKeyToUserDefaults {
-	KeyCombo myHotKey = [self hotKey];
-	
-	NSDictionary* hotKeyDict = @{@"flags": @(myHotKey.flags),
-								@"code": @(myHotKey.code)};
-	[[NSUserDefaults standardUserDefaults] setObject:hotKeyDict forKey:@"DTHotKey"];
-}
-
-- (void)loadHotKeyFromUserDefaults {
-	KeyCombo myHotKey = { NSEventModifierFlagCommand | NSEventModifierFlagShift, 36 /* return */ };
-	
-	NSDictionary* hotKeyDict = [[NSUserDefaults standardUserDefaults] objectForKey:@"DTHotKey"];
-	NSNumber* newFlags = hotKeyDict[@"flags"];
-	NSNumber* newCode = hotKeyDict[@"code"];
-	if(newFlags)
-		myHotKey.flags = newFlags.unsignedIntValue;
-	if(newCode)
-		myHotKey.code = newCode.shortValue;
-	
-	[self setHotKey:myHotKey];
 }
 
 - (IBAction)showPrefs:(id)sender {
