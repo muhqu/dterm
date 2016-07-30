@@ -68,15 +68,6 @@
 		25E651570CF3B0B80072997F /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E651550CF3B0B80072997F /* Preferences.xib */; };
 		25E6DA3E0EB2623F003C1E84 /* DSAppleScriptUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E6DA3D0EB2623F003C1E84 /* DSAppleScriptUtilities.m */; };
 		25E6DA3F0EB262AB003C1E84 /* DSAppleScriptUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E6DA3D0EB2623F003C1E84 /* DSAppleScriptUtilities.m */; };
-		3B3E1FB2190C10C500B31D3E /* SRRemoveShortcut.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3B3E1FA4190C10C500B31D3E /* SRRemoveShortcut.tif */; };
-		3B3E1FB3190C10C500B31D3E /* SRRemoveShortcutPressed.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3B3E1FA5190C10C500B31D3E /* SRRemoveShortcutPressed.tif */; };
-		3B3E1FB4190C10C500B31D3E /* SRRemoveShortcutRollover.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3B3E1FA6190C10C500B31D3E /* SRRemoveShortcutRollover.tif */; };
-		3B3E1FB5190C10C500B31D3E /* SRSnapback.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3B3E1FA7190C10C500B31D3E /* SRSnapback.tiff */; };
-		3B3E1FB6190C10C500B31D3E /* SRCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E1FA9190C10C500B31D3E /* SRCommon.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		3B3E1FB7190C10C500B31D3E /* SRKeyCodeTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E1FAB190C10C500B31D3E /* SRKeyCodeTransformer.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		3B3E1FB8190C10C500B31D3E /* SRRecorderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E1FAD190C10C500B31D3E /* SRRecorderCell.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		3B3E1FB9190C10C500B31D3E /* SRRecorderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E1FAF190C10C500B31D3E /* SRRecorderControl.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		3B3E1FBA190C10C500B31D3E /* SRValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E1FB1190C10C500B31D3E /* SRValidator.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3B6316B4190D51B500D62E4E /* DTShellUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 257158E80CFF9A99007181F4 /* DTShellUtilities.m */; };
 		3B6316B6190D51E100D62E4E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B6316B5190D51E100D62E4E /* XCTest.framework */; };
 		3B899CA01B95FE630083FB9A /* WAYTheDarkSide.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B899C9F1B95FE630083FB9A /* WAYTheDarkSide.m */; };
@@ -189,20 +180,6 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* DTerm_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTerm_Prefix.pch; sourceTree = "<group>"; };
-		3B3E1FA4190C10C500B31D3E /* SRRemoveShortcut.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SRRemoveShortcut.tif; sourceTree = "<group>"; };
-		3B3E1FA5190C10C500B31D3E /* SRRemoveShortcutPressed.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SRRemoveShortcutPressed.tif; sourceTree = "<group>"; };
-		3B3E1FA6190C10C500B31D3E /* SRRemoveShortcutRollover.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SRRemoveShortcutRollover.tif; sourceTree = "<group>"; };
-		3B3E1FA7190C10C500B31D3E /* SRSnapback.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SRSnapback.tiff; sourceTree = "<group>"; };
-		3B3E1FA8190C10C500B31D3E /* SRCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRCommon.h; sourceTree = "<group>"; };
-		3B3E1FA9190C10C500B31D3E /* SRCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRCommon.m; sourceTree = "<group>"; };
-		3B3E1FAA190C10C500B31D3E /* SRKeyCodeTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRKeyCodeTransformer.h; sourceTree = "<group>"; };
-		3B3E1FAB190C10C500B31D3E /* SRKeyCodeTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRKeyCodeTransformer.m; sourceTree = "<group>"; };
-		3B3E1FAC190C10C500B31D3E /* SRRecorderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRRecorderCell.h; sourceTree = "<group>"; };
-		3B3E1FAD190C10C500B31D3E /* SRRecorderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRRecorderCell.m; sourceTree = "<group>"; };
-		3B3E1FAE190C10C500B31D3E /* SRRecorderControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRRecorderControl.h; sourceTree = "<group>"; };
-		3B3E1FAF190C10C500B31D3E /* SRRecorderControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRRecorderControl.m; sourceTree = "<group>"; };
-		3B3E1FB0190C10C500B31D3E /* SRValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRValidator.h; sourceTree = "<group>"; };
-		3B3E1FB1190C10C500B31D3E /* SRValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRValidator.m; sourceTree = "<group>"; };
 		381C522928B9812C8BE0EAF0 /* Pods-DTerm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DTerm.release.xcconfig"; path = "Pods/Target Support Files/Pods-DTerm/Pods-DTerm.release.xcconfig"; sourceTree = "<group>"; };
 		3B6316B5190D51E100D62E4E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		3B7E884ED7FBFC7000DF9EBD /* Pods-DTerm.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DTerm.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DTerm/Pods-DTerm.debug.xcconfig"; sourceTree = "<group>"; };
@@ -415,7 +392,6 @@
 			children = (
 				3B899C9E1B95FE630083FB9A /* WAYTheDarkSide.h */,
 				3B899C9F1B95FE630083FB9A /* WAYTheDarkSide.m */,
-				3B3E1FA2190C10C500B31D3E /* ShortcutRecorder */,
 				32CA4F630368D1EE00C91783 /* DTerm_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
@@ -450,36 +426,6 @@
 				780DDEE708186379F464817B /* Pods_DTerm.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		3B3E1FA2190C10C500B31D3E /* ShortcutRecorder */ = {
-			isa = PBXGroup;
-			children = (
-				3B3E1FA3190C10C500B31D3E /* Images */,
-				3B3E1FA8190C10C500B31D3E /* SRCommon.h */,
-				3B3E1FA9190C10C500B31D3E /* SRCommon.m */,
-				3B3E1FAA190C10C500B31D3E /* SRKeyCodeTransformer.h */,
-				3B3E1FAB190C10C500B31D3E /* SRKeyCodeTransformer.m */,
-				3B3E1FAC190C10C500B31D3E /* SRRecorderCell.h */,
-				3B3E1FAD190C10C500B31D3E /* SRRecorderCell.m */,
-				3B3E1FAE190C10C500B31D3E /* SRRecorderControl.h */,
-				3B3E1FAF190C10C500B31D3E /* SRRecorderControl.m */,
-				3B3E1FB0190C10C500B31D3E /* SRValidator.h */,
-				3B3E1FB1190C10C500B31D3E /* SRValidator.m */,
-			);
-			name = ShortcutRecorder;
-			path = "3rd party source/ShortcutRecorder";
-			sourceTree = "<group>";
-		};
-		3B3E1FA3190C10C500B31D3E /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				3B3E1FA4190C10C500B31D3E /* SRRemoveShortcut.tif */,
-				3B3E1FA5190C10C500B31D3E /* SRRemoveShortcutPressed.tif */,
-				3B3E1FA6190C10C500B31D3E /* SRRemoveShortcutRollover.tif */,
-				3B3E1FA7190C10C500B31D3E /* SRSnapback.tiff */,
-			);
-			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -568,8 +514,6 @@
 				25AE84220CF0D208008F96FD /* TermWindow.xib in Resources */,
 				25E651570CF3B0B80072997F /* Preferences.xib in Resources */,
 				2529F8510CF5F6AB00CDF456 /* DTerm.icns in Resources */,
-				3B3E1FB4190C10C500B31D3E /* SRRemoveShortcutRollover.tif in Resources */,
-				3B3E1FB3190C10C500B31D3E /* SRRemoveShortcutPressed.tif in Resources */,
 				25878BD80D03598500255595 /* ProgressWhite-11.png in Resources */,
 				25878BD90D03598500255595 /* ProgressWhite-0.png in Resources */,
 				25878BDA0D03598500255595 /* ProgressWhite-1.png in Resources */,
@@ -581,7 +525,6 @@
 				25878BE00D03598500255595 /* ProgressWhite-7.png in Resources */,
 				25878BE10D03598500255595 /* ProgressWhite-8.png in Resources */,
 				25878BE20D03598500255595 /* ProgressWhite-9.png in Resources */,
-				3B3E1FB2190C10C500B31D3E /* SRRemoveShortcut.tif in Resources */,
 				25878BE30D03598500255595 /* ProgressWhite-10.png in Resources */,
 				25A870C80D0B03E300D88D65 /* Updates Prefs.png in Resources */,
 				257355CE0D1085B5008E7D0F /* Acknowledgments.rtf in Resources */,
@@ -589,7 +532,6 @@
 				257355FC0D108999008E7D0F /* RTFWindow.xib in Resources */,
 				25BEBAFC0D171C8D00F7A797 /* DTermHelp in Resources */,
 				2525DE5F0D234AE0009A5592 /* Growl Registration Ticket.growlRegDict in Resources */,
-				3B3E1FB5190C10C500B31D3E /* SRSnapback.tiff in Resources */,
 				254036C610FFCDCC0076CE83 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -678,19 +620,14 @@
 				25E651540CF3B0860072997F /* DTPrefsWindowController.m in Sources */,
 				2529F6BC0CF4CD0700CDF456 /* DTBlackRedStatusTransformer.m in Sources */,
 				25229FF50CF8BEDE00DF702E /* DTTermWindowContentView.m in Sources */,
-				3B3E1FB8190C10C500B31D3E /* SRRecorderCell.m in Sources */,
 				2522A1020CFB540500DF702E /* DTResultsTextView.m in Sources */,
 				3B899CA01B95FE630083FB9A /* WAYTheDarkSide.m in Sources */,
 				2583733F0CFE105F00943791 /* DTResultsView.m in Sources */,
 				258373440CFE12A000943791 /* DTRunManager.m in Sources */,
-				3B3E1FB7190C10C500B31D3E /* SRKeyCodeTransformer.m in Sources */,
-				3B3E1FB6190C10C500B31D3E /* SRCommon.m in Sources */,
 				258375660CFF47E600943791 /* DTCommandFieldEditor.m in Sources */,
-				3B3E1FBA190C10C500B31D3E /* SRValidator.m in Sources */,
 				257158E90CFF9A99007181F4 /* DTShellUtilities.m in Sources */,
 				25878A240D03399E00255595 /* DTProgressCancelButton.m in Sources */,
 				25A871A10D0B157F00D88D65 /* DTPrefsAXController.m in Sources */,
-				3B3E1FB9190C10C500B31D3E /* SRRecorderControl.m in Sources */,
 				257355F60D108839008E7D0F /* RTFWindowController.m in Sources */,
 				257357BB0D10F231008E7D0F /* DSNumberFormatterTransformer.m in Sources */,
 				257357E60D10F987008E7D0F /* DSDecimalToIntegerTransformer.m in Sources */,
