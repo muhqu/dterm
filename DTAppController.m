@@ -10,7 +10,7 @@
 #import "PathFinder.h"
 #import "RTFWindowController.h"
 
-#import <MASShortcut/MASShortcutBinder.h>
+@import MASShortcut.MASShortcutBinder;
 
 NSString* const DTResultsToKeepKey = @"DTResultsToKeep";
 NSString* const DTHotkeyAlsoDeactivatesKey = @"DTHotkeyAlsoDeactivates";

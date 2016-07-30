@@ -2,8 +2,8 @@
  * iTerm.h
  */
 
-#import <AppKit/AppKit.h>
-#import <ScriptingBridge/ScriptingBridge.h>
+@import AppKit;
+@import ScriptingBridge;
 
 
 @class iTermItem, iTermITermApplication, iTermColor, iTermDocument, iTermWindow, iTermAttributeRun, iTermCharacter, iTermParagraph, iTermText, iTermAttachment, iTermWord, iTermSession, iTermTerminal, iTermPrintSettings;

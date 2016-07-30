@@ -2,8 +2,8 @@
  * Terminal.h
  */
 
-#import <AppKit/AppKit.h>
-#import <ScriptingBridge/ScriptingBridge.h>
+@import AppKit;
+@import ScriptingBridge;
 
 
 @class TerminalApplication, TerminalWindow, TerminalSettingsSet, TerminalTab;

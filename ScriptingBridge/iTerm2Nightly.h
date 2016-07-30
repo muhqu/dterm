@@ -2,8 +2,8 @@
  * iTerm2Nightly.h
  */
 
-#import <AppKit/AppKit.h>
-#import <ScriptingBridge/ScriptingBridge.h>
+@import AppKit;
+@import ScriptingBridge;
 
 
 @class iTerm2NightlyApplication, iTerm2NightlyTerminalWindow, iTerm2NightlyTab, iTerm2NightlySession;

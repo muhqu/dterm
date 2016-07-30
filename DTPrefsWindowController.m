@@ -7,7 +7,7 @@
 #import "DTPrefsAXController.h"
 #import "FontNameToDisplayNameTransformer.h"
 
-#import <MASShortcut/Shortcut.h>
+@import MASShortcut.Shortcut;
 
 @implementation DTPrefsWindowController
 

@@ -1,8 +1,7 @@
 //  DSAppleScriptUtilities.h
 //  Copyright (c) 2008-2010 Decimus Software, Inc. All rights reserved.
 
-#import <Cocoa/Cocoa.h>
-
+@import Foundation;
 
 @interface DSAppleScriptUtilities : NSObject
 

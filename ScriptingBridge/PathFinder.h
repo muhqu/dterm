@@ -2,8 +2,8 @@
  * PathFinder.h
  */
 
-#import <AppKit/AppKit.h>
-#import <ScriptingBridge/ScriptingBridge.h>
+@import AppKit;
+@import ScriptingBridge;
 
 
 @class PathFinderApplication, PathFinderDocument, PathFinderWindow, PathFinderRichText, PathFinderCharacter, PathFinderParagraph, PathFinderWord, PathFinderAttributeRun, PathFinderAttachment, PathFinderFsItem, PathFinderFsFile, PathFinderContainer, PathFinderFsFolder, PathFinderDisk, PathFinderFinderWindow, PathFinderApplication, PathFinderInfoWindow;

@@ -18,7 +18,7 @@
 //  THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <AppKit/AppKit.h>
+@import AppKit;
 
 /** This class provides several helper methods to handle OS X Yosemite's new Dark Mode. Use this class to determine if the system appearance is currently set up to be in the Dark Mode or not, and if it supports it anyways. Next, specify event handlers per view or window controller (or any other object), which will be performed whenever the user switches the Dark Mode system preferene. */
 @interface WAYTheDarkSide : NSObject
