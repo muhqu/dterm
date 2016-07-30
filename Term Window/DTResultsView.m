@@ -45,7 +45,7 @@
 - (BOOL)performKeyEquivalent:(NSEvent*)event {
 	NSString* chars = event.charactersIgnoringModifiers;
 	if([chars isEqualToString:@"c"] &&
-	   ((event.modifierFlags & NSDeviceIndependentModifierFlagsMask) == NSControlKeyMask)) {
+	   ((event.modifierFlags & NSEventModifierFlagDeviceIndependentFlagsMask) == NSEventModifierFlagControl)) {
 		[self.window.windowController cancelCurrentCommand:self];
 		return YES;
 	}

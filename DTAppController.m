@@ -165,7 +165,7 @@ OSStatus DTHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
 }
 
 - (void)loadHotKeyFromUserDefaults {
-	KeyCombo myHotKey = { NSCommandKeyMask | NSShiftKeyMask, 36 /* return */ };
+	KeyCombo myHotKey = { NSEventModifierFlagCommand | NSEventModifierFlagShift, 36 /* return */ };
 	
 	NSDictionary* hotKeyDict = [[NSUserDefaults standardUserDefaults] objectForKey:@"DTHotKey"];
 	NSNumber* newFlags = hotKeyDict[@"flags"];
