@@ -1,0 +1,15 @@
+//
+//  Warnings.xcconfig
+//  DTerm
+//
+//  Created by OrangeRaven on 2016-07-31.
+//
+//
+
+
+//WARNING_CFLAGS = -Weverything  // doesn't seem to get picked up
+OTHER_CFLAGS = $(inherited) -Weverything -Wno-gnu-conditional-omitted-operand
+
+GCC_TREAT_WARNINGS_AS_ERRORS = YES
+
+RUN_CLANG_STATIC_ANALYZER = YES

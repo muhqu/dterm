@@ -1,0 +1,9 @@
+//
+//  DTerm.Release.xcconfig
+//  DTerm
+//
+//  Created by OrangeRaven on 2016-07-31.
+//
+//
+
+#include "DTerm.Shared.xcconfig"

@@ -1,0 +1,11 @@
+//
+//  DTerm.Debug.xcconfig
+//  DTerm
+//
+//  Created by OrangeRaven on 2016-07-31.
+//
+//
+
+#include "DTerm.Shared.xcconfig"
+
+GCC_TREAT_WARNINGS_AS_ERRORS = NO

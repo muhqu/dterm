@@ -1,0 +1,12 @@
+//
+//  DTerm.Shared.xcconfig
+//  DTerm
+//
+//  Created by OrangeRaven on 2016-07-31.
+//
+//
+
+#include "Warnings.xcconfig"
+
+// make CocoaPods happy (i.e. shut up its warnings)
+ALWAYS_SEARCH_USER_PATHS = NO
