@@ -108,7 +108,7 @@
 		requiredFlags = [[aDecoder decodeObject] unsignedIntegerValue];
 	}
 	
-	allowedFlags |= NSFunctionKeyMask;
+	allowedFlags |= NSEventModifierFlagFunction;
 
 	[self _loadKeyCombo];
 
@@ -243,7 +243,7 @@
 			
 		// Draw snapback image
 			NSImage *snapBackArrow = SRResIndImage(@"SRSnapback");	
-			[snapBackArrow drawAtPoint:[self _snapbackRectForFrame: cellFrame].origin fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0f];
+			[snapBackArrow drawAtPoint:[self _snapbackRectForFrame: cellFrame].origin fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0f];
 			
 		// Because of the gradient and snapback image, the white rounded rect will be smaller
 			whiteRect = NSInsetRect(cellFrame, 9.5f, 2.0f);
@@ -269,7 +269,7 @@
 			{
 				NSString *removeImageName = [NSString stringWithFormat: @"SRRemoveShortcut%@", (mouseInsideTrackingArea ? (mouseDown ? @"Pressed" : @"Rollover") : (mouseDown ? @"Rollover" : @""))];
 				NSImage *removeImage = SRResIndImage(removeImageName);
-                [removeImage drawAtPoint:[self _removeButtonRectForFrame: cellFrame].origin fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0f];
+                [removeImage drawAtPoint:[self _removeButtonRectForFrame: cellFrame].origin fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0f];
 			}
 		}
 		
@@ -278,7 +278,7 @@
 	// Draw text
 		NSMutableParagraphStyle *mpstyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
 		[mpstyle setLineBreakMode: NSLineBreakByTruncatingTail];
-		[mpstyle setAlignment: NSCenterTextAlignment];
+		[mpstyle setAlignment: NSTextAlignmentCenter];
 		
 	// Only the KeyCombo should be black and in a bigger font size
 		BOOL recordingOrEmpty = (isRecording || [self _isEmpty]);
@@ -456,7 +456,7 @@
 			
 		// Draw snapback image
 			NSImage *snapBackArrow = SRResIndImage(@"SRSnapback");
-            [snapBackArrow drawAtPoint:correctedSnapBackOrigin fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0f*alphaRecording];
+            [snapBackArrow drawAtPoint:correctedSnapBackOrigin fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0f*alphaRecording];
 		}
 		
 	// Draw border and remove badge if needed
@@ -468,7 +468,7 @@
 		{
 			NSString *removeImageName = [NSString stringWithFormat: @"SRRemoveShortcut%@", (mouseInsideTrackingArea ? (mouseDown ? @"Pressed" : @"Rollover") : (mouseDown ? @"Rollover" : @""))];
 			NSImage *removeImage = SRResIndImage(removeImageName);
-            [removeImage drawAtPoint:[viewportMovement transformPoint:([self _removeButtonRectForFrame: cellFrame].origin)] fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:alphaView];
+            [removeImage drawAtPoint:[viewportMovement transformPoint:([self _removeButtonRectForFrame: cellFrame].origin)] fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:alphaView];
 //NSLog(@"drew removeImage with alpha %f", alphaView);
 		}
 //	}
@@ -478,7 +478,7 @@
 	// Draw text
 		NSMutableParagraphStyle *mpstyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
 		[mpstyle setLineBreakMode: NSLineBreakByTruncatingTail];
-		[mpstyle setAlignment: NSCenterTextAlignment];
+		[mpstyle setAlignment: NSTextAlignmentCenter];
 		
 		CGFloat alphaCombo = alphaView;
 		CGFloat alphaRecordingText = alphaRecording;
@@ -666,7 +666,7 @@
 		
 		switch ([currentEvent type])
 		{
-			case NSLeftMouseDown:
+			case NSEventTypeLeftMouseDown:
 			{
 				// Check if mouse is over remove/snapback image
 				if ([controlView mouse:mouseLocation inRect:trackingRect])
@@ -677,7 +677,7 @@
 				
 				break;
 			}
-			case NSLeftMouseDragged:
+			case NSEventTypeLeftMouseDragged:
 			{				
 				// Recheck if mouse is still over the image while dragging 
 				mouseInsideTrackingArea = [controlView mouse:mouseLocation inRect:trackingRect];
@@ -728,7 +728,7 @@
 			}
 		}
 		
-    } while ((currentEvent = [[controlView window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask) untilDate:[NSDate distantFuture] inMode:NSEventTrackingRunLoopMode dequeue:YES]));
+    } while ((currentEvent = [[controlView window] nextEventMatchingMask:(NSEventMaskLeftMouseDragged | NSEventMaskLeftMouseUp) untilDate:[NSDate distantFuture] inMode:NSEventTrackingRunLoopMode dequeue:YES]));
 	
     return YES;
 }
@@ -793,7 +793,7 @@
 				if (allowsKeyOnly) {
 					// ...AND modifiers are empty, or empty save for the Function key
 					// (needed, since forward delete is fn+delete on laptops)
-					if (flags == ShortcutRecorderEmptyFlags || flags == (ShortcutRecorderEmptyFlags | NSFunctionKeyMask)) {
+					if (flags == ShortcutRecorderEmptyFlags || flags == (ShortcutRecorderEmptyFlags | NSEventModifierFlagFunction)) {
 						// ...check for behavior in escapeKeysRecord.
 						if (!escapeKeysRecord) {
 							goAhead = NO;
@@ -816,7 +816,7 @@
 										error:&error] ) {
                     // display the error...
 						NSAlert *alert = [NSAlert alertWithNonRecoverableError:error];
-						[alert setAlertStyle:NSCriticalAlertStyle];
+						[alert setAlertStyle:NSAlertStyleCritical];
 						[alert runModal];
 						
 					// Recheck pressed modifier keys
@@ -1273,27 +1273,27 @@
 	NSUInteger a = allowedFlags;
 	NSUInteger m = requiredFlags;
 
-	if (m & NSCommandKeyMask) filteredFlags |= NSCommandKeyMask;
-	else if ((flags & NSCommandKeyMask) && (a & NSCommandKeyMask)) filteredFlags |= NSCommandKeyMask;
+	if (m & NSEventModifierFlagCommand) filteredFlags |= NSEventModifierFlagCommand;
+	else if ((flags & NSEventModifierFlagCommand) && (a & NSEventModifierFlagCommand)) filteredFlags |= NSEventModifierFlagCommand;
 	
-	if (m & NSAlternateKeyMask) filteredFlags |= NSAlternateKeyMask;
-	else if ((flags & NSAlternateKeyMask) && (a & NSAlternateKeyMask)) filteredFlags |= NSAlternateKeyMask;
+	if (m & NSEventModifierFlagOption) filteredFlags |= NSEventModifierFlagOption;
+	else if ((flags & NSEventModifierFlagOption) && (a & NSEventModifierFlagOption)) filteredFlags |= NSEventModifierFlagOption;
 	
-	if ((m & NSControlKeyMask)) filteredFlags |= NSControlKeyMask;
-	else if ((flags & NSControlKeyMask) && (a & NSControlKeyMask)) filteredFlags |= NSControlKeyMask;
+	if ((m & NSEventModifierFlagControl)) filteredFlags |= NSEventModifierFlagControl;
+	else if ((flags & NSEventModifierFlagControl) && (a & NSEventModifierFlagControl)) filteredFlags |= NSEventModifierFlagControl;
 	
-	if ((m & NSShiftKeyMask)) filteredFlags |= NSShiftKeyMask;
-	else if ((flags & NSShiftKeyMask) && (a & NSShiftKeyMask)) filteredFlags |= NSShiftKeyMask;
+	if ((m & NSEventModifierFlagShift)) filteredFlags |= NSEventModifierFlagShift;
+	else if ((flags & NSEventModifierFlagShift) && (a & NSEventModifierFlagShift)) filteredFlags |= NSEventModifierFlagShift;
 	
-	if ((m & NSFunctionKeyMask)) filteredFlags |= NSFunctionKeyMask;
-	else if ((flags & NSFunctionKeyMask) && (a & NSFunctionKeyMask)) filteredFlags |= NSFunctionKeyMask;
+	if ((m & NSEventModifierFlagFunction)) filteredFlags |= NSEventModifierFlagFunction;
+	else if ((flags & NSEventModifierFlagFunction) && (a & NSEventModifierFlagFunction)) filteredFlags |= NSEventModifierFlagFunction;
 	
 	return filteredFlags;
 }
 
 - (BOOL)_validModifierFlags:(NSUInteger)flags
 {
-	return (allowsKeyOnly ? YES : (((flags & NSCommandKeyMask) || (flags & NSAlternateKeyMask) || (flags & NSControlKeyMask) || (flags & NSShiftKeyMask) || (flags & NSFunctionKeyMask)) ? YES : NO));	
+	return (allowsKeyOnly ? YES : (((flags & NSEventModifierFlagCommand) || (flags & NSEventModifierFlagOption) || (flags & NSEventModifierFlagControl) || (flags & NSEventModifierFlagShift) || (flags & NSEventModifierFlagFunction)) ? YES : NO));	
 }
 
 #pragma mark -
@@ -1303,13 +1303,13 @@
 	NSUInteger carbonFlags = ShortcutRecorderEmptyFlags;
 	NSUInteger filteredFlags = [self _filteredCocoaFlags: cocoaFlags];
 	
-	if (filteredFlags & NSCommandKeyMask) carbonFlags |= cmdKey;
-	if (filteredFlags & NSAlternateKeyMask) carbonFlags |= optionKey;
-	if (filteredFlags & NSControlKeyMask) carbonFlags |= controlKey;
-	if (filteredFlags & NSShiftKeyMask) carbonFlags |= shiftKey;
+	if (filteredFlags & NSEventModifierFlagCommand) carbonFlags |= cmdKey;
+	if (filteredFlags & NSEventModifierFlagOption) carbonFlags |= optionKey;
+	if (filteredFlags & NSEventModifierFlagControl) carbonFlags |= controlKey;
+	if (filteredFlags & NSEventModifierFlagShift) carbonFlags |= shiftKey;
 	
 	// I couldn't find out the equivalent constant in Carbon, but apparently it must use the same one as Cocoa. -AK
-	if (filteredFlags & NSFunctionKeyMask) carbonFlags |= NSFunctionKeyMask;
+	if (filteredFlags & NSEventModifierFlagFunction) carbonFlags |= NSEventModifierFlagFunction;
 	
 	return carbonFlags;
 }

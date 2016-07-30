@@ -185,10 +185,10 @@
 			
 			menuItemModifierFlags = [menuItem keyEquivalentModifierMask];
             
-			if ( menuItemModifierFlags & NSCommandKeyMask )     menuItemCommandMod = YES;
-			if ( menuItemModifierFlags & NSAlternateKeyMask )   menuItemOptionMod = YES;
-			if ( menuItemModifierFlags & NSShiftKeyMask )       menuItemShiftMod = YES;
-			if ( menuItemModifierFlags & NSControlKeyMask )     menuItemCtrlMod = YES;
+			if ( menuItemModifierFlags & NSEventModifierFlagCommand )     menuItemCommandMod = YES;
+			if ( menuItemModifierFlags & NSEventModifierFlagOption )   menuItemOptionMod = YES;
+			if ( menuItemModifierFlags & NSEventModifierFlagShift )       menuItemShiftMod = YES;
+			if ( menuItemModifierFlags & NSEventModifierFlagControl )     menuItemCtrlMod = YES;
 			
 			NSString *localKeyString = SRStringForKeyCode( keyCode );
 			
