@@ -74,7 +74,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		A51A12118B9BF55AB0768BAB /* Pods_DTerm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780DDEE708186379F464817B /* Pods_DTerm.framework */; };
+		F8D737F9DF9B12F1BE09D70F /* libPods-DTerm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A430721887F66A704657BD79 /* libPods-DTerm.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,9 +186,9 @@
 		3B899C9E1B95FE630083FB9A /* WAYTheDarkSide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WAYTheDarkSide.h; path = "3rd party source/WAYTheDarkSide.h"; sourceTree = "<group>"; };
 		3B899C9F1B95FE630083FB9A /* WAYTheDarkSide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WAYTheDarkSide.m; path = "3rd party source/WAYTheDarkSide.m"; sourceTree = "<group>"; };
 		75B0EC781A022E5900C023D1 /* iTerm2Nightly.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTerm2Nightly.h; sourceTree = "<group>"; };
-		780DDEE708186379F464817B /* Pods_DTerm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DTerm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* DTerm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DTerm.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A430721887F66A704657BD79 /* libPods-DTerm.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DTerm.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,7 +208,7 @@
 				250074550CF0B1C500949B95 /* Carbon.framework in Frameworks */,
 				250075730CF0C24200949B95 /* ScriptingBridge.framework in Frameworks */,
 				25E0070A0DBFCA280092F1E5 /* IOKit.framework in Frameworks */,
-				A51A12118B9BF55AB0768BAB /* Pods_DTerm.framework in Frameworks */,
+				F8D737F9DF9B12F1BE09D70F /* libPods-DTerm.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,7 +423,7 @@
 				3B6316B5190D51E100D62E4E /* XCTest.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
-				780DDEE708186379F464817B /* Pods_DTerm.framework */,
+				A430721887F66A704657BD79 /* libPods-DTerm.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -831,10 +831,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = net.decimus.dterm;
 				PRODUCT_NAME = DTerm;
-				WARNING_CFLAGS = (
-					"-Wall",
-					"-Wextra",
-				);
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -888,10 +884,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.decimus.dterm;
 				PRODUCT_NAME = DTerm;
 				STRIP_INSTALLED_PRODUCT = YES;
-				WARNING_CFLAGS = (
-					"-Wall",
-					"-Wextra",
-				);
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

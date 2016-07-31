@@ -1,8 +1,7 @@
 platform :osx
-inhibit_all_warnings!
 
 target 'DTerm' do
-  use_frameworks!
+  # use_frameworks!
 
-  pod 'MASShortcut'
+  pod 'MASShortcut', :inhibit_warnings => true
 end
