@@ -9,6 +9,22 @@
 
 
 @interface DTRunManager ()
+{
+    NSString* workingDirectory;
+    NSArray* selectedURLStrings;
+    
+    NSString* command;
+    NSTextStorage* resultsStorage;
+    NSAttributedString* trailingWhitespace;
+    NSMutableData* unprocessedResultsData;
+    NSMutableDictionary* currentAttributes;
+    NSUInteger cursorLoc;
+    
+    NSTask* task;
+    NSFileHandle* stdOut;
+    NSFileHandle* stdErr;
+}
+
 @property NSTask* task;
 - (void)launch;
 - (void)processResultsData;

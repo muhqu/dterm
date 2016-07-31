@@ -2,6 +2,12 @@
 
 #import "DTAntialiasControllableTextField.h"
 
+@interface DTAntialiasControllableTextField ()
+{
+    BOOL disableAntialiasing;
+}
+
+@end
 
 @implementation DTAntialiasControllableTextField
 

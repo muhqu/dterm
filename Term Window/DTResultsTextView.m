@@ -4,6 +4,15 @@
 
 #import "DTTermWindowController.h"
 
+@interface DTResultsTextView ()
+{
+    BOOL validResultsStorage;
+    NSTimer* sizeToFitTimer;
+    
+    BOOL disableAntialiasing;
+}
+@end
+
 @implementation DTResultsTextView
 
 @synthesize disableAntialiasing;

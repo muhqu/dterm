@@ -2,8 +2,16 @@
 
 #import "DTProgressCancelButton.h"
 
-
 @interface DTProgressCancelButton ()
+{
+    NSTrackingArea* trackingArea;
+    BOOL mouseInside;
+    
+    NSTimer* animationTimer;
+    NSArray*animationImages;
+    unsigned char nextAnimImg;
+}
+
 - (void)updateImageForMouseInside:(BOOL)inside;
 - (void)loadAnimationImages;
 - (void)updateAnimation:(NSTimer*)timer;

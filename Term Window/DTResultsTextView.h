@@ -1,12 +1,7 @@
 //  Copyright (c) 2007-2010 Decimus Software, Inc. All rights reserved.
 
 
-@interface DTResultsTextView : NSTextView {
-	BOOL validResultsStorage;
-	NSTimer* sizeToFitTimer;
-	
-	BOOL disableAntialiasing;
-}
+@interface DTResultsTextView : NSTextView 
 
 @property (nonatomic) BOOL disableAntialiasing;
 

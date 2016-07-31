@@ -14,13 +14,7 @@ extern NSString* const DTFontSizeKey;
 
 extern NSString* const DTGlobalShortcutPreferenceKey;
 
-@interface DTAppController : NSObject {
-	IBOutlet SUUpdater* __unsafe_unretained sparkleUpdater;
-	DTTermWindowController* termWindowController;
-	
-	RTFWindowController* acknowledgmentsWindowController;
-	RTFWindowController* licenseWindowController;
-}
+@interface DTAppController : NSObject 
 
 @property (unsafe_unretained) SUUpdater* sparkleUpdater;
 @property (readonly, nonatomic) DTPrefsWindowController* prefsWindowController;

@@ -27,6 +27,24 @@ static void * DTResultsStorageContext = &DTResultsStorageContext;
 @end
 
 @interface DTTermWindowController ()
+{
+    NSString* workingDirectory;
+    NSArray* selectedURLs;
+    
+    NSString* command;
+    IBOutlet NSPopUpButton* actionButton;
+    IBOutlet NSMenu* actionMenu;
+    
+    NSMutableArray* runs;
+    IBOutlet NSArrayController* runsController;
+    IBOutlet NSView* placeholderForResultsView;
+    IBOutlet DTResultsView* resultsView;
+    IBOutlet DTResultsTextView* resultsTextView;
+    
+    __weak IBOutlet NSTextField *cmdTextField;
+    IBOutlet NSTextField* commandField;
+    DTCommandFieldEditor* commandFieldEditor;
+}
 
 @property BOOL didCallDeactivate;
 @property BOOL shouldHideWDForSelectedRun;

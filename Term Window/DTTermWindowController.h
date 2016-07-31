@@ -4,24 +4,7 @@
 @class DTResultsView;
 @class DTResultsTextView;
 
-@interface DTTermWindowController : NSWindowController {
-	NSString* workingDirectory;
-	NSArray* selectedURLs;
-	
-	NSString* command;
-	IBOutlet NSPopUpButton* actionButton;
-	IBOutlet NSMenu* actionMenu;
-	
-	NSMutableArray* runs;
-	IBOutlet NSArrayController* runsController;
-	IBOutlet NSView* placeholderForResultsView;
-	IBOutlet DTResultsView* resultsView;
-	IBOutlet DTResultsTextView* resultsTextView;
-	
-    __weak IBOutlet NSTextField *cmdTextField;
-	IBOutlet NSTextField* commandField;
-	DTCommandFieldEditor* commandFieldEditor;
-}
+@interface DTTermWindowController : NSWindowController
 
 @property NSString* workingDirectory;
 @property NSArray* selectedURLs;

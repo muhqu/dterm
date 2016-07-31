@@ -4,16 +4,7 @@
 @class DTPrefsAXController;
 @class MASShortcutView;
 
-@interface DTPrefsWindowController : NSWindowController {
-	IBOutlet MASShortcutView* shortcutRecorder;
-	
-	IBOutlet NSView* generalPrefsView;
-	IBOutlet NSView* accessibilityPrefsView;
-	IBOutlet NSView* updatesPrefsView;
-	IBOutlet NSView* regPrefsView;
-	
-	IBOutlet DTPrefsAXController* axPrefsController;
-}
+@interface DTPrefsWindowController : NSWindowController 
 
 @property DTPrefsAXController* axPrefsController;
 

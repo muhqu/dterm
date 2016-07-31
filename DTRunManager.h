@@ -1,21 +1,7 @@
 //  Copyright (c) 2007-2010 Decimus Software, Inc. All rights reserved.
 
 
-@interface DTRunManager : NSObject {
-	NSString* workingDirectory;
-	NSArray* selectedURLStrings;
-	
-	NSString* command;
-	NSTextStorage* resultsStorage;
-	NSAttributedString* trailingWhitespace;
-	NSMutableData* unprocessedResultsData;
-	NSMutableDictionary* currentAttributes;
-	NSUInteger cursorLoc;
-	
-	NSTask* task;
-	NSFileHandle* stdOut;
-	NSFileHandle* stdErr;
-}
+@interface DTRunManager : NSObject 
 
 @property NSString* workingDirectory;
 @property NSArray* selectedURLStrings;

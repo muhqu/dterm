@@ -28,6 +28,13 @@ NSString* const DTGlobalShortcutPreferenceKey = @"DTGlobalHotKey";
 #define CF_AUTORELEASE(x) if(x) CFAutorelease(x)
 
 @interface DTAppController ()
+{
+    IBOutlet SUUpdater* __unsafe_unretained sparkleUpdater;
+    DTTermWindowController* termWindowController;
+    
+    RTFWindowController* acknowledgmentsWindowController;
+    RTFWindowController* licenseWindowController;
+}
 
 @property (readwrite, nonatomic) DTPrefsWindowController* prefsWindowController;
 

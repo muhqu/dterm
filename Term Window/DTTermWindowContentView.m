@@ -2,6 +2,18 @@
 
 #import "DTTermWindowContentView.h"
 
+@interface DTTermWindowContentView ()
+{
+    IBOutlet NSTextField* workingDirectoryTextField;
+    IBOutlet NSTextField* commandTextField;
+    IBOutlet NSButton* actionButton;
+    
+    IBOutlet DTResultsView* resultsView;
+    
+    BOOL alreadySizing;
+}
+@end
+
 @implementation DTTermWindowContentView
 
 //- (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize {

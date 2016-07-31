@@ -4,6 +4,13 @@
 
 #import "DTTermWindowController.h"
 
+@interface DTResultsView ()
+{
+    IBOutlet NSButton* goPrevButton;
+    IBOutlet NSButton* goNextButton;
+}
+@end
+
 @implementation DTResultsView
 
 - (instancetype)initWithFrame:(NSRect)frame {

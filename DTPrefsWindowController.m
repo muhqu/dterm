@@ -9,6 +9,19 @@
 
 @import MASShortcut.Shortcut;
 
+@interface DTPrefsWindowController ()
+{
+    IBOutlet MASShortcutView* shortcutRecorder;
+    
+    IBOutlet NSView* generalPrefsView;
+    IBOutlet NSView* accessibilityPrefsView;
+    IBOutlet NSView* updatesPrefsView;
+    IBOutlet NSView* regPrefsView;
+    
+    IBOutlet DTPrefsAXController* axPrefsController;
+}
+@end
+
 @implementation DTPrefsWindowController
 
 //@synthesize regPrefsViewController;
