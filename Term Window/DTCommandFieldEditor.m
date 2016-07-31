@@ -101,7 +101,8 @@
 			if(!prefix)
 				prefix = completion;
 			else
-				prefix = [prefix commonPrefixWithString:completion options:(NSDiacriticInsensitiveSearch|NSWidthInsensitiveSearch)];
+				prefix = [prefix commonPrefixWithString:completion
+                                                options:(NSStringCompareOptions)(NSDiacriticInsensitiveSearch|NSWidthInsensitiveSearch)];
 		}
 		
 		// If there's a common prefix, we just go ahead and insert it in this case and cancel completion, to behave like bash.

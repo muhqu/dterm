@@ -8,8 +8,7 @@
 
 
 //WARNING_CFLAGS = -Weverything  // doesn't seem to get picked up ... but does show up in Xcode Build Settings
-OTHER_CFLAGS = $(inherited) -Weverything -Wno-pedantic
-
+OTHER_CFLAGS = $(inherited) -Weverything -Wno-pedantic -Wno-objc-missing-property-synthesis -Wno-direct-ivar-access
 GCC_TREAT_WARNINGS_AS_ERRORS = YES
 
 RUN_CLANG_STATIC_ANALYZER = YES

@@ -65,7 +65,10 @@ static void * DTResultsStorageContext = &DTResultsStorageContext;
 		NSUserDefaultsController *sdc = [NSUserDefaultsController sharedUserDefaultsController];
         for (NSString *defaultKeyPath in [self observedDefaults])
         {
-            [sdc addObserver:self forKeyPath:defaultKeyPath options:0 context:DTPreferencesContext];
+            [sdc addObserver:self
+                  forKeyPath:defaultKeyPath
+                     options:(NSKeyValueObservingOptions)0
+                     context:DTPreferencesContext];
         }
 	}
 	
@@ -96,7 +99,10 @@ static void * DTResultsStorageContext = &DTResultsStorageContext;
 				 toObject:runsController
 			  withKeyPath:@"selection.resultsStorage"
 				  options:nil];
-    [resultsTextView addObserver:self forKeyPath:@"resultsStorage" options:0 context:DTResultsStorageContext];
+    [resultsTextView addObserver:self
+                      forKeyPath:@"resultsStorage"
+                         options:(NSKeyValueObservingOptions)0
+                         context:DTResultsStorageContext];
     
     // HACK to show "proper" placeholder despite in dark mode  (dark mode placeholder is too dark to actually be visible)
     // ... or switch appearance of this ivar?!
@@ -250,7 +256,7 @@ static void * DTResultsStorageContext = &DTResultsStorageContext;
     
     [self.window performSelector:NSSelectorFromString(@"orderOut:")
                       withObject:self
-                      afterDelay:duration + 0.01f];
+                      afterDelay:duration + 0.01];
 }
 
 - (void) cleanUpOldRuns

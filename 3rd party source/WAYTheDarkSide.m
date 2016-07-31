@@ -64,6 +64,7 @@ static NSMapTable *_WAYTheDarkSideLeavingBlocksMapTable;
 		return [interfaceStyle isEqualToString:kWAYTheDarkSideGlobalPersistentDomainDarkInterfaceStyleValue];
 	}
 	@catch (NSException *exception) {
+        NSLog(@"exception while trying to get dark mode state: %@", exception);
 		return NO;
 	}
 }

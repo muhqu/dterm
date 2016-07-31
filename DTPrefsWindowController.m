@@ -147,7 +147,7 @@
 	// Get font name and size from user defaults
 	NSDictionary *values = [NSUserDefaultsController sharedUserDefaultsController].values;
 	NSString *fontName = [values valueForKey:DTFontNameKey];
-	CGFloat fontSize = [[values valueForKey:DTFontSizeKey] floatValue];
+	CGFloat fontSize = [[values valueForKey:DTFontSizeKey] doubleValue];
 	
 	// Create font from name and size; initialize font panel
     NSFont *font = [NSFont fontWithName:fontName size:fontSize];

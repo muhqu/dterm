@@ -345,7 +345,7 @@
 					
 					if(!plainString) {
 						// Failed!  Cut off half of it and try again, rounding down so we'll eventually hit zero
-						lengthOfNormalString = (NSUInteger)trunc(lengthOfNormalString / 2.0);
+						lengthOfNormalString = (NSUInteger)lround(trunc(lengthOfNormalString / 2.0));
 					}
 				}
 				

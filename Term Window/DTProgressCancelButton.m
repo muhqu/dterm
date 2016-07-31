@@ -104,7 +104,7 @@
 	if(trackingArea)
 		[self removeTrackingArea:trackingArea];
 	trackingArea = [[NSTrackingArea alloc] initWithRect:self.visibleRect
-												options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow | NSTrackingInVisibleRect)
+												options:(NSTrackingAreaOptions)(NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow | NSTrackingInVisibleRect)
 												  owner:self
 											   userInfo:nil];
 	[self addTrackingArea:trackingArea];

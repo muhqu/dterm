@@ -3,10 +3,10 @@
 
 @interface DTPrefsAXController : NSViewController
 
-@property (readonly) BOOL axAppTrusted;
-@property (readonly) NSString* axTrustStatusString;
-@property (readonly) BOOL axGeneralAccessEnabled;
-@property (readonly) NSString* axGeneralAccessEnabledString;
+@property (readonly, nonatomic) BOOL axAppTrusted;
+@property (readonly, nonatomic) NSString* axTrustStatusString;
+@property (readonly, nonatomic) BOOL axGeneralAccessEnabled;
+@property (readonly, nonatomic) NSString* axGeneralAccessEnabledString;
 
 - (void)recheckGeneralAXAccess;
 

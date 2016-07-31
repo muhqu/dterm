@@ -12,15 +12,16 @@
 
 #import <MASShortcut/MASShortcutBinder.h>
 
+NSString* const DTGlobalShortcutPreferenceKey = @"DTGlobalHotKey";
+
 NSString* const DTResultsToKeepKey = @"DTResultsToKeep";
-NSString* const DTHotkeyAlsoDeactivatesKey = @"DTHotkeyAlsoDeactivates";
-NSString* const DTShowDockIconKey = @"DTShowDockIcon";
 NSString* const DTTextColorKey = @"DTTextColor";
 NSString* const DTFontNameKey = @"DTFontName";
 NSString* const DTFontSizeKey = @"DTFontSize";
-NSString* const DTDisableAntialiasingKey = @"DTDisableAntialiasing";
 
-NSString* const DTGlobalShortcutPreferenceKey = @"DTGlobalHotKey";
+static NSString* const DTHotkeyAlsoDeactivatesKey = @"DTHotkeyAlsoDeactivates";
+static NSString* const DTShowDockIconKey = @"DTShowDockIcon";
+static NSString* const DTDisableAntialiasingKey = @"DTDisableAntialiasing";
 
 
 // Calling `CFAutorelease()` on NULL objects crashes with a EXC_BREAKPOINT and the message:
@@ -363,6 +364,7 @@ failedAXDocument:	;
 		}
 		@catch (NSException* e) {
 			// *shrug*...guess we can't get a selection
+            NSLog(@"exception while trying get selection: %@", e);
 		}
 		
 		
@@ -377,6 +379,7 @@ failedAXDocument:	;
 		}
 		@catch (NSException* e) {
 			// *shrug*...guess we can't get insertion location
+            NSLog(@"exception while trying get selection: %@", e);
 		}
 		
 		// If it wasn't the desktop, grab it from the frontmost window
@@ -398,6 +401,7 @@ failedAXDocument:	;
 			}
 			@catch (NSException* e) {
 				// Fall through to the default attempts to set WD from selection
+                NSLog(@"exception while trying get selection: %@", e);
 			}
 		}
 	}
@@ -415,7 +419,8 @@ failedAXDocument:	;
 		}
 		@catch (NSException* e) {
 			// *shrug*...guess we can't get a selection
-		}
+            NSLog(@"exception while trying get selection: %@", e);
+        }
 		
 		@try {
 			SBElementArray* finderWindows = [pf finderWindows];
@@ -433,6 +438,7 @@ failedAXDocument:	;
 		}
 		@catch (NSException* e) {
 			// Fall through to the default attempts to set WD from selection
+            NSLog(@"exception while trying get selection: %@", e);
 		}
 		
 	}
