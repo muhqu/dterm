@@ -20,9 +20,9 @@
 
 #import "WAYTheDarkSide.h"
 
-NSString *const kWAYTheDarkSideGlobalPersistentDomainInterfaceStyleKey = @"AppleInterfaceStyle";
-NSString *const kWAYTheDarkSideGlobalPersistentDomainDarkInterfaceStyleValue = @"Dark";
-NSString *const kWAYTheDarkSideAppleInterfaceThemeChangedNotification = @"AppleInterfaceThemeChangedNotification";
+static NSString *const kWAYTheDarkSideGlobalPersistentDomainInterfaceStyleKey = @"AppleInterfaceStyle";
+static NSString *const kWAYTheDarkSideGlobalPersistentDomainDarkInterfaceStyleValue = @"Dark";
+static NSString *const kWAYTheDarkSideAppleInterfaceThemeChangedNotification = @"AppleInterfaceThemeChangedNotification";
 
 static BOOL _WAYTheDarkSideRecentValue;
 static BOOL _WAYTheDarkSideValueKnown;
