@@ -68,7 +68,6 @@
 		25E651570CF3B0B80072997F /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E651550CF3B0B80072997F /* Preferences.xib */; };
 		25E6DA3E0EB2623F003C1E84 /* DSAppleScriptUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E6DA3D0EB2623F003C1E84 /* DSAppleScriptUtilities.m */; };
 		25E6DA3F0EB262AB003C1E84 /* DSAppleScriptUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E6DA3D0EB2623F003C1E84 /* DSAppleScriptUtilities.m */; };
-		2D018F391DB5166700D944D0 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 2D018F381DB5166700D944D0 /* README.md */; };
 		3B6316B4190D51B500D62E4E /* DTShellUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 257158E80CFF9A99007181F4 /* DTShellUtilities.m */; };
 		3B6316B6190D51E100D62E4E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B6316B5190D51E100D62E4E /* XCTest.framework */; };
 		3B899CA01B95FE630083FB9A /* WAYTheDarkSide.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B899C9F1B95FE630083FB9A /* WAYTheDarkSide.m */; };
@@ -640,7 +639,6 @@
 				25B10DD00D29D2B40034B100 /* DSUniqueTextStorage.m in Sources */,
 				251453C30D720F35000B6100 /* FontNameToDisplayNameTransformer.m in Sources */,
 				251D0E5F0D7CA32E00E9E49D /* DTAntialiasControllableTextField.m in Sources */,
-				2D018F391DB5166700D944D0 /* README.md in Sources */,
 				25E6DA3E0EB2623F003C1E84 /* DSAppleScriptUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
