@@ -68,6 +68,7 @@
 		25E651570CF3B0B80072997F /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E651550CF3B0B80072997F /* Preferences.xib */; };
 		25E6DA3E0EB2623F003C1E84 /* DSAppleScriptUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E6DA3D0EB2623F003C1E84 /* DSAppleScriptUtilities.m */; };
 		25E6DA3F0EB262AB003C1E84 /* DSAppleScriptUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E6DA3D0EB2623F003C1E84 /* DSAppleScriptUtilities.m */; };
+		2D018F391DB5166700D944D0 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 2D018F381DB5166700D944D0 /* README.md */; };
 		3B6316B4190D51B500D62E4E /* DTShellUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 257158E80CFF9A99007181F4 /* DTShellUtilities.m */; };
 		3B6316B6190D51E100D62E4E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B6316B5190D51E100D62E4E /* XCTest.framework */; };
 		3B899CA01B95FE630083FB9A /* WAYTheDarkSide.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B899C9F1B95FE630083FB9A /* WAYTheDarkSide.m */; };
@@ -179,6 +180,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2D018F381DB5166700D944D0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2D018F3A1DB516BD00D944D0 /* DeveloperNotes.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = DeveloperNotes.txt; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* DTerm_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTerm_Prefix.pch; sourceTree = "<group>"; };
 		381C522928B9812C8BE0EAF0 /* Pods-DTerm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DTerm.release.xcconfig"; path = "Pods/Target Support Files/Pods-DTerm/Pods-DTerm.release.xcconfig"; sourceTree = "<group>"; };
 		3B6316B5190D51E100D62E4E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -372,6 +375,8 @@
 		29B97314FDCFA39411CA2CEA /* DTerm */ = {
 			isa = PBXGroup;
 			children = (
+				2D018F3A1DB516BD00D944D0 /* DeveloperNotes.txt */,
+				2D018F381DB5166700D944D0 /* README.md */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				25229E1A0CF8981700DF702E /* Term Window */,
 				2529F6B90CF4CCCE00CDF456 /* Utilities */,
@@ -635,6 +640,7 @@
 				25B10DD00D29D2B40034B100 /* DSUniqueTextStorage.m in Sources */,
 				251453C30D720F35000B6100 /* FontNameToDisplayNameTransformer.m in Sources */,
 				251D0E5F0D7CA32E00E9E49D /* DTAntialiasControllableTextField.m in Sources */,
+				2D018F391DB5166700D944D0 /* README.md in Sources */,
 				25E6DA3E0EB2623F003C1E84 /* DSAppleScriptUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
