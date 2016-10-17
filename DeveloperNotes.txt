@@ -1,0 +1,38 @@
+DTerm Project
+decimus
+http://decimus.net
+
+Document by Jaime O. Rios (http://jaimerios.com)
+
+Requirements for build
+
+1 - CocoaPods installed on development computer
+
+ Installation:
+ Within Terminal.app:
+  $ sudo gem install cocoapods
+
+
+ Note:
+ If you get the following error:
+  ERROR:  Error installing cocoapods:
+  activesupport requires Ruby version >= 2.2.2.
+
+ You may run the following command in Terminal.app:
+  $ sudo gem install activesupport -v 4.2.6
+
+ Then re-run the cocoapod install command to complete the cocoapods installation.
+
+
+2 - CocoaPod set up for project
+
+ Within Terminal.app:
+
+  $ cd PATH_TO_DTERM_DIRECTORY
+  $ pod install
+
+
+ This should set up the Pods.xcodeproj project for the DTerm project.
+
+
+If all went well, then you can open up the DTerm.xcworkspace workspace and have fun.
