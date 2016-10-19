@@ -18,6 +18,18 @@
 			name = Revision;
 			productName = BZRRevision;
 		};
+		2DA838001DB6F95E008F2E06 /* Release */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 2DA838031DB6F95E008F2E06 /* Build configuration list for PBXAggregateTarget "Release" */;
+			buildPhases = (
+				2DA838091DB6F995008F2E06 /* Run Script - copy binary and create DMG */,
+			);
+			dependencies = (
+				2DA838051DB6F965008F2E06 /* PBXTargetDependency */,
+			);
+			name = Release;
+			productName = Release;
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -91,6 +103,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 25A0CDCA0DE500010042D226;
 			remoteInfo = BZRRevision;
+		};
+		2DA838041DB6F965008F2E06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1107260486CEB800E47090;
+			remoteInfo = DTerm;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -482,6 +501,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0800;
+				TargetAttributes = {
+					2DA838001DB6F95E008F2E06 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "DTerm" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -498,6 +523,7 @@
 				8D1107260486CEB800E47090 /* DTerm */,
 				257159180CFFAA2C007181F4 /* Tests */,
 				25A0CDCA0DE500010042D226 /* Revision */,
+				2DA838001DB6F95E008F2E06 /* Release */,
 			);
 		};
 /* End PBXProject section */
@@ -556,6 +582,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "PATH=\"$HOME/bin:/usr/local/bin:$PATH\"\ncd \"$PROJECT_DIR\"\nSHA=$(git rev-parse --short HEAD)\nCOUNT=$(git rev-list --count HEAD)\necho \"*** Building Git Revision: $COUNT @ $SHA\"\nmkdir -p \"$TARGET_BUILD_DIR/include\"\necho \"#define REVISION 1.8.$COUNT\" >  $TARGET_BUILD_DIR/include/Revision.h\n\ngit diff --quiet\nif [[ $? -eq 0 ]]; then\n  echo \"#define REVISION_PUBLIC 1.8.$COUNT-$SHA\" >> $TARGET_BUILD_DIR/include/Revision.h\nelse\n  echo \"#define REVISION_PUBLIC 1.8.$COUNT-$SHA+\" >> $TARGET_BUILD_DIR/include/Revision.h\nfi\n";
+		};
+		2DA838091DB6F995008F2E06 /* Run Script - copy binary and create DMG */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script - copy binary and create DMG";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# 2016-10-18\n# copy binary to dist folder and attempt to make DMG for release\n\nset -e\nset -u\n\nif [[ -d $PROJECT_DIR/dist/binary ]]; then\n    rm -R $PROJECT_DIR/dist/binary\nfi\n\necho \"Creating folder: $PROJECT_DIR/dist/binary\"\nmkdir $PROJECT_DIR/dist/binary\n\necho \"Attempting to copy DTerm app\"\ncp -R $BUILT_PRODUCTS_DIR/DTerm.app $PROJECT_DIR/dist/binary\n\necho \"Attempting to create release DMG\"\ncd $PROJECT_DIR/dist\n./create_dmg_for_release.sh";
+			showEnvVarsInLog = 0;
 		};
 		6FE6181D1E8391CF3AAE47EA /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -655,6 +696,11 @@
 			isa = PBXTargetDependency;
 			target = 25A0CDCA0DE500010042D226 /* Revision */;
 			targetProxy = 25A0CDD30DE500950042D226 /* PBXContainerItemProxy */;
+		};
+		2DA838051DB6F965008F2E06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D1107260486CEB800E47090 /* DTerm */;
+			targetProxy = 2DA838041DB6F965008F2E06 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -785,6 +831,20 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = Revision;
+			};
+			name = Release;
+		};
+		2DA838011DB6F95E008F2E06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = DTerm;
+			};
+			name = Debug;
+		};
+		2DA838021DB6F95E008F2E06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = DTerm;
 			};
 			name = Release;
 		};
@@ -964,6 +1024,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		2DA838031DB6F95E008F2E06 /* Build configuration list for PBXAggregateTarget "Release" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DA838011DB6F95E008F2E06 /* Debug */,
+				2DA838021DB6F95E008F2E06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "DTerm" */ = {
 			isa = XCConfigurationList;
