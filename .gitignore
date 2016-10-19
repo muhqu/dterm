@@ -4,3 +4,5 @@
 
 /Pods/
 dist
+*xcuserstate
+*xcuserdata*
